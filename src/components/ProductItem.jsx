@@ -2,7 +2,7 @@ import React from "react";
 import Review from "./Review";
 
 //defines a function called Product, which takes five props: product, cartItems, setCartItems, cartProducts, setCartProducts,
-function Product({
+function ProductItem({
   product,
   cartItems,
   setCartItems,
@@ -59,9 +59,8 @@ function Product({
     }
   };
 
-   // Function to return a button based on the start price, end price, and product ID.
+  // Function to return a button based on the start price, end price, and product ID.
   const getButton = (startPrice, endPrice, productId) => {
-
     // If the product has a start price and an end price, return a button that says "View options".
     if (startPrice && endPrice) {
       return (
@@ -93,7 +92,6 @@ function Product({
   const displayNoneStyle = {
     display: "none",
   };
-
 
   return (
     <div className="col mb-5">
@@ -141,9 +139,7 @@ function Product({
         </div>
         {/*  Product actions */}
 
-
         <div className=" d-flex flex-column align-items-center justify-content-evenly card-footer p-4 pt-0 border-top-0 bg-transparent">
-
           {/* get buttons based on productPrice */}
           {getButton(
             product.productPrice.startPrice,
@@ -155,7 +151,6 @@ function Product({
           <div
             className="alert text-center text-light bg-success m-2 mb-0 p-0"
             role="alert"
-
             /* based on product proberty addToCart it will show or hide the message */
             style={product.addToCart ? {} : displayNoneStyle}
           >
@@ -169,4 +164,4 @@ function Product({
 }
 
 // Export the Product component so that it can be used in other components.
-export default Product;
+export default ProductItem;

@@ -1,5 +1,7 @@
-//INport the Product Component
-import Product from "./Product.Jsx";
+//Import the ProductItem Component
+import React from "react";
+import ProductItem from "./ProductItem";
+
 
 
 /* Function component that takes the following props:
@@ -25,16 +27,17 @@ function Section({ productDetails, cartItems, setCartItems, setCartProducts,cart
             {productDetails.map((product) => {
               return (
                 
-                <Product
-                  product={product}
-                  key={product.productId}
-                  cartItems={cartItems}
-                  setCartItems={setCartItems}
-                  cartProducts={cartProducts}
-                  setCartProducts={setCartProducts}
-                  isAddSuccess = {isAddSuccess}
-                  setIsAddSuccess = {setIsAddSuccess}
-                  
+             
+
+                <ProductItem 
+                product={product}
+                key={product.productId}
+                cartItems={cartItems}
+                setCartItems={setCartItems}
+                cartProducts={cartProducts}
+                setCartProducts={setCartProducts}
+                isAddSuccess = {isAddSuccess}
+                setIsAddSuccess = {setIsAddSuccess}
                 />
                
               );
