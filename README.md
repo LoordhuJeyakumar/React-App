@@ -18,6 +18,6 @@
     - [Product](./src/components/Product.jsx) -- Each product
   - [Footer](./src/components/Footer.jsx) -- Footer
 
-  ### Github source URL [Click Here]()
+  ### Github source URL [Click Here](https://github.com/LoordhuJeyakumar/React-App/tree/shop-homepage)
 
   ### Netlify Deployed URL [Click Here]()
