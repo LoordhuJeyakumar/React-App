@@ -1,8 +1,23 @@
-# React + Vite
+# React Shop Home Page Task
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+### Task Details
 
-Currently, two official plugins are available:
+- The rating according to value given
+- Disable add to cart button when added to card
+- Remove item from cart & enable add to cart
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+### It's Have Below Components
+
+- [App](./src/App.jsx)
+
+  - [NavComponent](./src/components/NavComponent.jsx)--NavBar
+    - [Cart](./src/components/Cart.jsx) -- Cart Button
+  - [CartPanel](./src/components/CartPanel.jsx) -- It's have Cart Products
+  - [Header](./src/components/Header.jsx) -- it's have homepage
+  - [Section](./src/components/Section.jsx) -- It's have Product Cards
+    - [Product](./src/components/Product.jsx) -- Each product
+  - [Footer](./src/components/Footer.jsx) -- Footer
+
+  ### Github source URL [Click Here]()
+
+  ### Netlify Deployed URL [Click Here]()
