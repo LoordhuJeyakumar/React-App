@@ -20,4 +20,4 @@
 
   ### Github source URL [Click Here](https://github.com/LoordhuJeyakumar/React-App/tree/shop-homepage)
 
-  ### Netlify Deployed URL [Click Here]()
+  ### Netlify Deployed URL [Click Here](https://react-shop-homepage-and-cart.netlify.app/)
