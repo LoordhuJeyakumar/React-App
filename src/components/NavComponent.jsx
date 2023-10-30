@@ -1,7 +1,7 @@
 import React from "react";
 import Cart from "./Cart";
 
-function NavComponent() {
+function NavComponent({cartItems, setCartItems}) {
   return (
     <div>
       
@@ -66,7 +66,10 @@ function NavComponent() {
                 </ul>
               </li>
             </ul>
-            <Cart/>
+            <Cart
+            cartItem = {cartItems}
+            setCartItems = {setCartItems}
+            />
           </div>
          
         </div>

@@ -1,18 +1,17 @@
 import React, { Component } from "react";
-import Product from "./Product.Jsx";
 
+// Create a React class component called Cart.
 class Cart extends Component {
+  // The constructor function is called when the component is first created.
   constructor(props) {
+    // Call the parent class's constructor.
     super(props);
-
-    
-    console.log(this.props);
-    
   }
 
+  // The render() method is responsible for returning the React element that will be rendered to the screen.
   render() {
-    
-    const { productId } = this.props;
+    // Get the cartItem prop.
+    const { cartItem } = this.props;
 
     return (
       <div>
@@ -27,13 +26,10 @@ class Cart extends Component {
             <i className="bi-cart-fill me-1"></i>
             Cart
             <span className="badge bg-dark text-white ms-1 rounded-pill">
-              0
+              {cartItem.length}
             </span>
           </button>
         </form>
-
-        
-       
       </div>
     );
   }
