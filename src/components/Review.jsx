@@ -112,4 +112,5 @@ class Review extends Component {
   }
 }
 
+// Export the Review component so that it can be used in other components.
 export default Review;
