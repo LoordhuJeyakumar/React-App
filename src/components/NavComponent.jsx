@@ -1,6 +1,11 @@
+//imports the React library and the Cart component.
 import React from "react";
 import Cart from "./Cart";
 
+//defines a function called NavComponent, which takes two props: cartItems and setCartItems.
+/* 
+The cartItems prop is an array of cart items, and the setCartItems prop is a function used to update the cart items.
+*/
 function NavComponent({cartItems, setCartItems}) {
   return (
     <div>
@@ -66,6 +71,7 @@ function NavComponent({cartItems, setCartItems}) {
                 </ul>
               </li>
             </ul>
+            {/* Use Cart Component hear add pass data */}
             <Cart
             cartItem = {cartItems}
             setCartItems = {setCartItems}
@@ -79,4 +85,5 @@ function NavComponent({cartItems, setCartItems}) {
   );
 }
 
+// Export the NavComponent component so that it can be used in other components.
 export default NavComponent;
