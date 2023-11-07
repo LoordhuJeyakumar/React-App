@@ -15,7 +15,7 @@
   - [CartPanel](./src/components/CartPanel.jsx) -- It's have Cart Products
   - [Header](./src/components/Header.jsx) -- it's have homepage
   - [Section](./src/components/Section.jsx) -- It's have Product Cards
-    - [Product](.src/components/ProductItem.jsx) -- Each product
+    - [Product](./src/components/ProductItem.jsx) -- Each product
   - [Footer](./src/components/Footer.jsx) -- Footer
 
   ### Github source URL [Click Here](https://github.com/LoordhuJeyakumar/React-App/tree/shop-homepage)
