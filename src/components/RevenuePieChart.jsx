@@ -5,37 +5,54 @@ import { Doughnut } from "react-chartjs-2";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-const data = {
-  labels: ["Direct", "Referral", "Social"],
-  datasets: [
-    {
-      data: [55, 30, 15],
-      backgroundColor: ["#4e73df", "#1cc88a", "#36b9cc"],
-      hoverBackgroundColor: ["#2e59d9", "#17a673", "#2c9faf"],
-      hoverBorderColor: "rgba(234, 236, 244, 1)",
-      rotation: 90,
-      
+function RevenuePieChart({ income }) {
+  const getIncomeType = () => {
+    let directIncome = 0;
+    let referralIncome = 0;
+    let socialIncome = 0;
+
+    income[0].data.forEach((eachMonth) => {
+      directIncome += eachMonth.earningType.direct;
+      referralIncome += eachMonth.earningType.referral;
+      socialIncome += eachMonth.earningType.social;
+    });
+    let res = [directIncome, referralIncome, socialIncome];
+
+    return res;
+  };
+
+  const data = {
+    labels: ["Direct", "Referral", "Social"],
+    datasets: [
+      {
+        data: getIncomeType(),
+        backgroundColor: ["#4e73df", "#1cc88a", "#36b9cc"],
+        hoverBackgroundColor: ["#2e59d9", "#17a673", "#2c9faf"],
+        hoverBorderColor: "rgba(234, 236, 244, 1)",
+        rotation: 90,
+      },
+    ],
+  };
+  const options = {
+    maintainAspectRatio: false,
+    tooltips: {
+      backgroundColor: "rgb(255,255,255)",
+      bodyFontColor: "#858796",
+      borderColor: "#dddfeb",
+      borderWidth: 1,
+      xPadding: 15,
+      yPadding: 15,
+      displayColors: false,
+      caretPadding: 10,
     },
-  ],
-};
-const options = {
-  maintainAspectRatio: false,
-  tooltips: {
-    backgroundColor: "rgb(255,255,255)",
-    bodyFontColor: "#858796",
-    borderColor: "#dddfeb",
-    borderWidth: 1,
-    xPadding: 15,
-    yPadding: 15,
-    displayColors: false,
-    caretPadding: 10,
-  },
-  legend: {
-    display: false,
-  },
-  cutoutPercentage: 80,
-};
-function RevenuePieChart() {
+    plugins: {
+      legend: {
+        display: false,
+      },
+    },
+    cutout: 95,
+  };
+
   return (
     <div className="col-xl-4 col-lg-5">
       <div className="card shadow mb-4">

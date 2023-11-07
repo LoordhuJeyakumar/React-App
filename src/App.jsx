@@ -1,46 +1,41 @@
-import React from "react";
+import React, { useState } from "react";
+import Dashboard from "./components/Dashboard";
 import SidePanel from "./components/SidePanel";
 import TopNavBar from "./components/TopNavBar";
-import ContentRowCards from "./components/ContentRowCards";
-import Dashboard from "./components/Dashboard";
-import ChartArea from "./components/ChartArea";
-import RevenuePieChart from "./components/RevenuePieChart";
-import Projects from "./components/Projects";
-import ColorsSystem from "./components/ColorsSystem";
-import Illustrations from "./components/Illustrations";
 import Footer from "./components/Footer";
 import LogOutModal from "./components/LogOutModal";
 
-function App(props) {
-  console.log(props);
 
+function App({ income }) {
+  const [element, setElement] = useState( <Dashboard income={income} />);
+  const [keyWord, setKeyWord] = useState("Dahsboard");
+  const [homePage, setHomePage] = useState(null);
   return (
     <div id="page-top">
-      <div id="wrapper">
-        <SidePanel />
-        <div id="content-wrapper" className="d-flex flex-column">
-          <div id="content">
-            <TopNavBar />
-            <div className="container-fluid">
-              <Dashboard />
-              <ContentRowCards />
-              <div className="row">
-                <ChartArea />
-                <RevenuePieChart />
-              </div>
-              <div className="row">
-                <div className="col-lg-6 mb-4">
-                  <Projects />
-                  <ColorsSystem />
-                </div>
-                <Illustrations />
-              </div>
+     
+      {homePage ? (
+        homePage
+      ) : (
+        <div id="wrapper">
+          <SidePanel
+            income={income}
+            element={element}
+            setElement={setElement}
+            keyWord={keyWord}
+            setKeyWord={setKeyWord}
+            homePage = {homePage}
+            setHomePage = {setHomePage}
+          />
+          <div id="content-wrapper" className="d-flex flex-column">
+            <div id="content">
+              <TopNavBar />
+              <div className="container-fluid">{element}</div>
             </div>
+            <Footer />
           </div>
-          <Footer />
         </div>
-      </div>
-      <LogOutModal />
+      )}
+      <LogOutModal homePage={homePage} setHomePage={setHomePage} />
     </div>
   );
 }

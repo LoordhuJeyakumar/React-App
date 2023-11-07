@@ -1,6 +1,7 @@
 import React from "react";
+import Login from "./Login";
 
-function LogOutModal() {
+function LogOutModal({ homePage, setHomePage }) {
   return (
     <div
       className="modal fade"
@@ -33,11 +34,22 @@ function LogOutModal() {
               className="btn btn-secondary"
               type="button"
               data-dismiss="modal"
+              id="closeBtn"
             >
               Cancel
             </button>
 
-            <button className="btn btn-primary">Logout</button>
+            <button
+              className="btn btn-primary"
+              onClick={() => {
+                setHomePage(
+                  <Login homePage={homePage} setHomePage={setHomePage} />
+                );
+                document.getElementById("closeBtn").click();
+              }}
+            >
+              Logout
+            </button>
           </div>
         </div>
       </div>
