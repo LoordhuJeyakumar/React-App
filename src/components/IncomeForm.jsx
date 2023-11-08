@@ -98,9 +98,15 @@ function IncomeForm({ income }) {
         <form className="d-md-flex justify-content-around align-items-center">
           <div>
             <div className="mt-4">
-              <label htmlFor="monthAndYear">Select Month and Year</label>
+              <label htmlFor="monthAndYear">
+                Select Month and Year <span style={{ color: "red" }}>*</span>
+              </label>
+              <p className="m-0 p-0" style={{ color: "red", fontSize: "13px" }}>
+                Only 2023 Year can be updated, Enter year & Month in this format
+                (yyyy-mm)
+              </p>
               <input
-              placeholder="Enter yaer & Month in this format (2023-12) "
+                placeholder="2023-12"
                 className=" w-100"
                 type="month"
                 id="monthAndYear"

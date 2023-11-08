@@ -20,8 +20,7 @@ function SidePanelDevider() {
   return <hr className="sidebar-divider" />;
 }
 
-function SidePanel({ income, element, setElement, homePage, setHomePage }) {
-
+function SidePanel({ income, setElement, homePage, setHomePage }) {
   const handleSidePanelClick = (event) => {
     let navElement = document.querySelectorAll(".nav-item");
     let collapse_Item = document.querySelectorAll(".collapse-item");
