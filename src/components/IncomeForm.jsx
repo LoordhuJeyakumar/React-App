@@ -12,6 +12,8 @@ function IncomeForm({ income }) {
   });
 
   const resetBtn = useRef();
+  const updateBtn = useRef();
+  const closeBtn = useRef();
 
   const getMonth = (monthId) => {
     switch (monthId) {
@@ -47,7 +49,35 @@ function IncomeForm({ income }) {
 
     income.forEach((data) => {
       if (data.year == selectedYearAndMonth.year) {
-        data.data.push({
+        if (!data.data[selectedYearAndMonth.month - 1]) {
+          data.data.push({
+            id: selectedYearAndMonth.month,
+            m: selectedYearAndMonth.month,
+            month: getMonth(selectedYearAndMonth.month),
+            earning: incomeDetails.totalIncomeSum(),
+            earningType: {
+              direct: incomeDetails.direct,
+              referral: incomeDetails.referral,
+              social: incomeDetails.social,
+            },
+          });
+          resetBtn.current.click();
+        } else {
+          updateBtn.current.click();
+        }
+      } else {
+        alert("Only 2023 year can be update");
+        resetBtn.current.click();
+      }
+    });
+  };
+
+  const handleUpdate = (event) => {
+    event.preventDefault();
+
+    income.forEach((data) => {
+      if (data.year == selectedYearAndMonth.year) {
+        let obj = {
           id: selectedYearAndMonth.month,
           m: selectedYearAndMonth.month,
           month: getMonth(selectedYearAndMonth.month),
@@ -57,10 +87,12 @@ function IncomeForm({ income }) {
             referral: incomeDetails.referral,
             social: incomeDetails.social,
           },
-        });
+        };
+        data.data[selectedYearAndMonth.month - 1] = obj;
+        closeBtn.current.click();
+        resetBtn.current.click();
       }
     });
-    resetBtn.current.click();
   };
 
   const handleDirectIncome = (event) => {
@@ -217,6 +249,66 @@ function IncomeForm({ income }) {
             >
               Save
             </button>
+            {/*  <!-- Button trigger modal --> */}
+            <button
+              type="button"
+              className="btn btn-primary"
+              data-toggle="modal"
+              data-target="#exampleModal"
+              hidden
+              ref={updateBtn}
+            >
+              Update
+            </button>
+
+            {/* <!-- Modal --> */}
+            <div
+              className="modal fade"
+              id="exampleModal"
+              tabIndex="-1"
+              aria-labelledby="exampleModalLabel"
+              aria-hidden="true"
+            >
+              <div className="modal-dialog">
+                <div className="modal-content">
+                  <div className="modal-header">
+                    <h5 className="modal-title" id="exampleModalLabel">
+                      Warning
+                    </h5>
+                    <button
+                      type="button"
+                      className="close"
+                      data-dismiss="modal"
+                      aria-label="Close"
+                    >
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div className="modal-body">
+                    You have entered Year and Month already exist
+                    <br />
+                    Do you want overwrite the existing data.... ?
+                  </div>
+                  <div className="modal-footer">
+                    <button
+                      type="button"
+                      className="btn btn-secondary"
+                      data-dismiss="modal"
+                      ref={closeBtn}
+                    >
+                      Close
+                    </button>
+                    <button
+                      type="button"
+                      className="btn btn-primary"
+                      onClick={handleUpdate}
+                    >
+                      Save changes
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </form>
       </div>
