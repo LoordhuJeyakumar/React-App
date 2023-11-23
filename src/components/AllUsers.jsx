@@ -1,176 +1,173 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
+import { DataContext } from "../App";
+import Table from "./Table";
+import Pagination from "./Pagination";
+import { each } from "jquery";
+import InputDataList from "./InputDataList";
+import DataPerPage from "./DataPerPage";
 
 function AllUsers() {
+  const apiData = useContext(DataContext);
+  const [currentNavPage, setCurrentNavPage] = useState(1);
+  const [contentPerPage, setContentPerPage] = useState(10);
+  const [userFilter, setUserFilter] = useState("allUsers");
+  const [filterdData, setFilterdData] = useState([]);
+  const [nameFilter, setNameFilter] = useState(null);
+
+  useEffect(() => {
+    let filterdArray = apiData.data.filter((eachData) => {
+      if (userFilter == "allUsers") {
+        return eachData;
+      } else if (userFilter == "admin") {
+        if (eachData.admin) {
+          return eachData;
+        }
+      } else if (userFilter == "user") {
+        if (!eachData.admin) {
+          return eachData;
+        }
+      } else if (userFilter == "activeUsers") {
+        if (eachData.userStatus) {
+          return eachData;
+        }
+      } else if (userFilter == "inActiveUsers") {
+        if (!eachData.userStatus) {
+          return eachData;
+        }
+      }
+    });
+
+    setFilterdData(filterdArray);
+  }, [userFilter]);
+
+  let lastPostIndex = currentNavPage * contentPerPage;
+  let firstPostIndex = lastPostIndex - contentPerPage;
+  let pageData;
+  if (!nameFilter || nameFilter == "") {
+    pageData = filterdData.slice(firstPostIndex, lastPostIndex);
+  } else {
+    pageData = nameFilter;
+  }
+
   const handleFilter = (event) => {
-    console.log(event);
+    let filter = event.target.value;
+    switch (filter) {
+      case "allUsers": {
+        setUserFilter("allUsers");
+        setCurrentNavPage(1);
+        break;
+      }
+      case "admin": {
+        setUserFilter("admin");
+        setCurrentNavPage(1);
+        break;
+      }
+      case "user": {
+        setUserFilter("user");
+        setCurrentNavPage(1);
+        break;
+      }
+      case "activeUsers": {
+        setUserFilter("activeUsers");
+        setCurrentNavPage(1);
+        break;
+      }
+      case "inActiveUsers": {
+        setUserFilter("inActiveUsers");
+        setCurrentNavPage(1);
+        break;
+      }
+    }
   };
+
+  const handleFilterName = (event) => {
+    let userId = Number(event.target.value.slice(0, 2));
+    let nameFilterArr = apiData.data.filter((each) => {
+      return each.id == userId;
+    });
+
+    setNameFilter(nameFilterArr);
+  };
+
+  const handleDataPerPage = (event) => {
+    setCurrentNavPage(1);
+    setContentPerPage(event.target.value);
+  };
+
   return (
-    <div className=" container roll-out">
-      <h2 className="text-center">All Users</h2>
-      <div className="d-flex gap-3 m-3">
-        <div>
-          <label htmlFor="userFilter">Filter by</label>
-          <select
-            name="filter"
-            id="userFilter"
-            className="form-select"
-            onChange={handleFilter}
-          >
-            <option value="allUsers">All Users</option>
-            <option value="admin">Admin Users</option>
-            <option value="user">Normal Users</option>
-            <option value="userStatus">Active Users</option>
-            <option value="userRole">IN-Active Users</option>
-          </select>
+    <div>
+      <div className="container">
+        <h1 className="text-center">Users</h1>
+        <div className="borderDesign"></div>
+        <div className="d-lg-flex  m-3 filterBox ">
+          <div className="input-group gap-2">
+            <div>
+              <label className="input-group-text" htmlFor="userFilter">
+                Filter by
+              </label>
+              <select
+                className="form-select"
+                id="userFilter"
+                name="filter"
+                onChange={handleFilter}
+              >
+                <option value="allUsers">All Users</option>
+                <option value="admin">Admin Users</option>
+                <option value="user">Normal Users</option>
+                <option value="activeUsers">Active Users</option>
+                <option value="inActiveUsers">IN-Active Users</option>
+              </select>
+            </div>
+            {/*  <div>
+              <label className="input-group-text" htmlFor="showContent">
+                Show Content
+              </label>
+              <select
+                name="filter"
+                id="showContent"
+                className="form-select"
+                onChange={handleDataPerPage}
+              >
+                <option value="10">10</option>- <option value="25">25</option>
+                <option value="50">50</option>- <option value="100">100</option>
+              </select>
+            </div> */}
+            <DataPerPage
+              data={pageData}
+              setContentPerPage={setContentPerPage}
+              contentPerPage={contentPerPage}
+              currentNavPage={currentNavPage}
+              setCurrentNavPage={setCurrentNavPage}
+            />
+            <InputDataList setNameFilter={setNameFilter} />
+          </div>
+          <div className="align-items-end mt-2 justify-content-end p-0 d-flex w-50">
+            {pageData.length > 1 ? (
+              <Pagination
+                contentPerPage={contentPerPage}
+                totalData={filterdData.length}
+                currentNavPage={currentNavPage}
+                setCurrentNavPage={setCurrentNavPage}
+              />
+            ) : (
+              ""
+            )}
+          </div>
         </div>
 
+        <Table pageData={pageData} actionBtnType={"view"}/>
         <div>
-          <label htmlFor="showContent">Show Content</label>
-          <select name="filter" id="showContent" className="form-select">
-            <option value="10">10</option>
-            <option value="25">25</option>
-            <option value="50r">50</option>
-            <option value="100">100</option>
-          </select>
+          {pageData.length > 1 ? (
+            <Pagination
+              contentPerPage={contentPerPage}
+              totalData={filterdData.length}
+              currentNavPage={currentNavPage}
+              setCurrentNavPage={setCurrentNavPage}
+            />
+          ) : (
+            ""
+          )}
         </div>
-
-        <div>
-          <label htmlFor="searchUsers"><i class="bi bi-search"></i></label>
-          <input
-            class="form-control"
-            list="usersList"
-            id="searchUsers"
-            placeholder="Type to search..."
-          />
-          <datalist id="usersList">
-            <option value="Chocolate"></option>
-            <option value="Coconut"></option>
-            <option value="Mint"></option>
-            <option value="Strawberry"></option>
-            <option value="Vanilla"></option>
-          </datalist>
-        </div>
-      </div>
-      <div>
-        <table className="table  table-hover table-dark ">
-          <thead>
-            <tr>
-              <th scope="col">User ID</th>
-              <th scope="col">Full Name</th>
-              <th scope="col">Mobile Number</th>
-              <th scope="col">Email</th>
-              <th scope="col">User Role</th>
-              <th scope="col">User Status</th>
-              <th scope="col" className="text-center" colSpan={3}>
-                Actions
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <th scope="row">1</th>
-              <td>Mark</td>
-              <td>Otto</td>
-              <td>Admin@gmail.com</td>
-              <td>Admin</td>
-              <td>Active</td>
-              <td className="actionBtn">
-                <button className="btn btn-primary">View User</button>
-              </td>
-              <td className="actionBtn">
-                <button className="btn btn-info">Edit User</button>
-              </td>
-              <td className="actionBtn">
-                <button className="btn btn-danger">Delete User</button>
-              </td>
-            </tr>
-            <tr>
-              <th scope="row">1</th>
-              <td>Mark</td>
-              <td>Otto</td>
-              <td>Admin@gmail.com</td>
-              <td>Admin</td>
-              <td>Active</td>
-              <td className="actionBtn">
-                <button className="btn btn-primary">View User</button>
-              </td>
-              <td className="actionBtn">
-                <button className="btn btn-info">Edit User</button>
-              </td>
-              <td className="actionBtn">
-                <button className="btn btn-danger">Delete User</button>
-              </td>
-            </tr>
-            <tr>
-              <th scope="row">1</th>
-              <td>Mark</td>
-              <td>Otto</td>
-              <td>Admin@gmail.com</td>
-              <td>Admin</td>
-              <td>Active</td>
-              <td className="actionBtn">
-                <button className="btn btn-primary">View User</button>
-              </td>
-              <td className="actionBtn">
-                <button className="btn btn-info">Edit User</button>
-              </td>
-              <td className="actionBtn">
-                <button className="btn btn-danger">Delete User</button>
-              </td>
-            </tr>
-            <tr>
-              <th scope="row">1</th>
-              <td>Mark</td>
-              <td>Otto</td>
-              <td>Admin@gmail.com</td>
-              <td>Admin</td>
-              <td>Active</td>
-              <td className="actionBtn">
-                <button className="btn btn-primary">View User</button>
-              </td>
-              <td className="actionBtn">
-                <button className="btn btn-info">Edit User</button>
-              </td>
-              <td className="actionBtn">
-                <button className="btn btn-danger">Delete User</button>
-              </td>
-            </tr>
-            <tr>
-              <th scope="row">1</th>
-              <td>Mark</td>
-              <td>Otto</td>
-              <td>Admin@gmail.com</td>
-              <td>Admin</td>
-              <td>Active</td>
-              <td className="actionBtn">
-                <button className="btn btn-primary">View User</button>
-              </td>
-              <td className="actionBtn">
-                <button className="btn btn-info">Edit User</button>
-              </td>
-              <td className="actionBtn">
-                <button className="btn btn-danger">Delete User</button>
-              </td>
-            </tr>
-            <tr>
-              <th scope="row">1</th>
-              <td>Mark</td>
-              <td>Otto</td>
-              <td>Admin@gmail.com</td>
-              <td>Admin</td>
-              <td>Active</td>
-              <td className="actionBtn">
-                <button className="btn btn-primary">View User</button>
-              </td>
-              <td className="actionBtn">
-                <button className="btn btn-info">Edit User</button>
-              </td>
-              <td className="actionBtn">
-                <button className="btn btn-danger">Delete User</button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
       </div>
     </div>
   );

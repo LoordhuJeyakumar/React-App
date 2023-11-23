@@ -1,33 +1,34 @@
-import React from "react";
+import React, { useState } from "react";
 import Dashboard from "./Dashboard";
 import CreateUser from "./CreateUser";
 import AllUsers from "./AllUsers";
 import DeleteUsers from "./DeleteUsers";
 import EditUsers from "./EditUsers";
+import { ToastContainer } from "react-toastify";
 
 function NavComponent({ homePageComponent, setHomePageComponent }) {
   const handleNavButton = (event) => {
     event.preventDefault();
     let navLink = document.querySelectorAll(".nav-link");
-    navLink.forEach(el=>el.classList.remove('activeLink'))
+    navLink.forEach((el) => el.classList.remove("activeLink"));
     let pageName = event.target.textContent;
-    
+
     if (pageName === "Dashboard") {
       setHomePageComponent(<Dashboard />);
     } else if (pageName === "Create User") {
       setHomePageComponent(<CreateUser />);
-    }else if (pageName === "All Users") {
+    } else if (pageName === "All Users") {
       setHomePageComponent(<AllUsers />);
-    }else if (pageName === "Edit Users") {
+    } else if (pageName === "Edit Users") {
       setHomePageComponent(<EditUsers />);
-    }else if (pageName === "Delete Users") {
+    } else if (pageName === "Delete Users") {
       setHomePageComponent(<DeleteUsers />);
     }
-    event.target.classList.add('activeLink')
-    
+    event.target.classList.add("activeLink");
   };
   return (
-    <div className="container d-flex justify-content-center mt-4 sticky-top " >
+    <div className="container d-flex justify-content-center mt-4 sticky-top ">
+      <ToastContainer theme="dark" position="bottom-right"/>
       <nav className="navbar navbar-expand-lg rounded-pill shadow justify-content-center d-flex ">
         <h2 className="text-md-end text-center m-3 heading w-50">
           User Management

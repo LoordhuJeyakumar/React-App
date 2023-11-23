@@ -1,38 +1,47 @@
-import React from "react";
+import React, { useContext, useState } from "react";
+import InputDataList from "./InputDataList";
+import Table from "./Table";
+import { DataContext } from "../App";
+import DataPerPage from "./DataPerPage";
+import Pagination from "./Pagination";
 
 function EditUsers() {
+  const [nameFilter, setNameFilter] = useState(null);
+  const [currentNavPage, setCurrentNavPage] = useState(1);
+  const [contentPerPage, setContentPerPage] = useState(10);
+  const apiData = useContext(DataContext);
+
+  let lastPostIndex = currentNavPage * contentPerPage;
+  let firstPostIndex = lastPostIndex - contentPerPage;
+  let pageData = apiData.data.slice(firstPostIndex, lastPostIndex);
+
   return (
     <div>
       <div className="container">
-        <div className="d-flex justify-content-center">
-          <div className=" w-50 search">
-            <label className="form-label w-100" htmlFor="searchUsers">
-              <input
-                class="form-control p-2 w-100"
-                list="usersList"
-                id="searchUsers"
-                placeholder="Type to search..."
+        <div className="d-flex justify-content-evenly m-2">
+        <div >
+        <DataPerPage
+          data={apiData.data}
+          setContentPerPage={setContentPerPage}
+          contentPerPage={contentPerPage}
+          currentNavPage={currentNavPage}
+          setCurrentNavPage={setCurrentNavPage}
+        />
+        </div>
+        <div>
+        <InputDataList setNameFilter={setNameFilter} />
+        </div>
+        <div className="align-items-end d-flex">
+        <Pagination
+                contentPerPage={contentPerPage}
+                totalData={apiData.data.length}
+                currentNavPage={currentNavPage}
+                setCurrentNavPage={setCurrentNavPage}
               />
-            </label>
-          </div>
-
-          <div className=" p-0 m-0 btnIcon">
-            <button className="btn p-0 m-0">
-              <lord-icon
-                src="https://cdn.lordicon.com/ybaojceo.json"
-                trigger="hover"
-              ></lord-icon>
-            </button>
-          </div>
+        </div>
         </div>
 
-        <datalist id="usersList">
-          <option value="Chocolate"></option>
-          <option value="Coconut"></option>
-          <option value="Mint"></option>
-          <option value="Strawberry"></option>
-          <option value="Vanilla"></option>
-        </datalist>
+        <Table pageData={pageData} actionBtnType={"edit"} />
       </div>
     </div>
   );

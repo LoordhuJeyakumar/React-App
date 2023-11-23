@@ -193,7 +193,6 @@ input[type="number"]::-webkit-outer-spin-button {
   margin: 0;
 }
 
-
 .submitBtn {
   width: 70%;
   height: 50%;
@@ -238,33 +237,86 @@ table > thead > tr > th,
 table > tbody > tr:nth-child(odd) > td,
 table > tbody > tr > td,
 table > tbody > tr > th {
-  background:  rgba(6, 11, 40, 0.94) !important;
+  background: rgba(6, 11, 40, 0.94) !important;
 }
-table > tbody > tr:nth-child(odd)>td,
-table > tbody > tr:nth-child(odd)>th
- {
+table > tbody > tr:nth-child(odd) > td,
+table > tbody > tr:nth-child(odd) > th {
   background: rgba(10, 14, 35, 0.49) !important;
 }
-table>tbody>tr>.actionBtn{
+table > tbody > tr > .actionBtn {
   text-align: center;
 }
-thead{
+thead {
   position: sticky;
-
 }
-.form-control::placeholder{
+.form-control::placeholder {
   color: #ffffff !important;
 }
 
-.btnIcon{
+.btnIcon {
   position: relative;
   left: -35px;
   top: 5px;
 }
-.btnIcon>button,.search>label>input{
-  border: none ;
-
+.btnIcon > button,
+.search > label > input {
+  border: none;
 }
-.search>label>input{
+.search > label > input {
   border-bottom: 1px solid rgb(4, 217, 255);
+}
+
+.filterBox .input-group-text, .input-group-text {
+  background: transparent !important;
+  border: none !important;
+}
+
+.paginationNav > ul > li > .page-link {
+  background-color: transparent;
+  border: none;
+  border-bottom: 1px solid rgb(4, 217, 255);
+  font-size: medium;
+}
+.paginationNav > ul > li {
+  background: rgba(10, 14, 35, 0.49) !important;
+}
+
+.active {
+  background-color: aqua !important;
+  color: black !important;
+  top: -1px;
+  border: 1px solid black;
+  outline: none;
+  border-radius: 10px;
+}
+
+.page-link:disabled {
+  opacity: 0.5;
+  cursor: not-allowed !important;
+}
+.previousBtn:hover,
+.nextBtn:hover {
+  background-color: cyan !important;
+  color: black !important;
+}
+
+.modal-content {
+  background: rgba(10, 14, 35, 0.49) !important;
+}
+.modal-body > table {
+  background: transparent !important;
+}
+.dataModelBox > .card {
+  background: transparent !important;
+}
+.selectedName>p{
+  padding-left: 2px;
+  display: flex;
+  align-items: center;
+  color: aquamarine !important;
+  background-color: none !important;
+  width: 100%;
+}
+.selectedName>input{
+
 }
