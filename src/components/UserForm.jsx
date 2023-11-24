@@ -1,4 +1,10 @@
-import React, { useContext, useEffect, useReducer, useRef } from "react";
+import React, {
+  useContext,
+  useEffect,
+  useReducer,
+  useRef,
+  useState,
+} from "react";
 import { initialState, reducer } from "../reducers/FormReducer";
 
 import "react-toastify/dist/ReactToastify.css";
@@ -6,24 +12,24 @@ import axios from "axios";
 import { DataContext } from "../App";
 import { toast } from "react-toastify";
 
-function UserForm({ formMode, userData }) {
+function UserForm({ formMode, userData, editUserID, modalCloseBtn }) {
   let [state, dispatch] = useReducer(reducer, initialState);
   const addUserRef = useRef(null);
   const contextData = useContext(DataContext);
   const creationDateTimeStamp = Date.now();
   const creationDate = new Date(creationDateTimeStamp);
-  const handleUpdateButton =  useRef(null)
+  const handleUpdateButton = useRef(null);
+  const closeBTn = useRef();
 
-  if(formMode=='edit'){
-    useEffect(()=>{
-      if(handleUpdateButton){
-       handleUpdateButton.current.click()
+  if (formMode == "edit") {
+    useEffect(() => {
+      if (handleUpdateButton) {
+        handleUpdateButton.current.click();
       }
-    },[])
+    }, [editUserID]);
   }
 
   const handleInputChange = (event) => {
-  
     dispatch({
       type: "inputChange",
       payLoad: { name: event.target.name, value: event.target.value },
@@ -45,7 +51,6 @@ function UserForm({ formMode, userData }) {
   };
 
   const handleStateSelect = (event) => {
-
     dispatch({
       type: "selctState",
       payLoad: {
@@ -80,16 +85,20 @@ function UserForm({ formMode, userData }) {
   }
   function handleGetUsers(event) {
     event.preventDefault();
+
     dispatch({
       type: "creationDate",
       payLoad: {
         userCreationDate: creationDate.toLocaleDateString(),
         userCreationTime: creationDate.toLocaleTimeString(),
-        userCreationTimeStamp: creationDateTimeStamp
+        userCreationTimeStamp: creationDateTimeStamp,
       },
     });
 
     dispatch({ type: "updateUser", payLoad: userData });
+  }
+  const handleCloseModal=(event)=>{
+    closeBTn.current.click()
   }
 
   const updateUserDetails = (event) => {
@@ -100,23 +109,24 @@ function UserForm({ formMode, userData }) {
     }
     addUserRef.current.classList.add("was-validated");
     if (addUserRef.current.checkValidity()) {
-      /* axios.put("http://localhost:3000/usersDetails", state); */
-
+      axios.put(`http://localhost:3000/usersDetails/${editUserID}`, state);
+  
       event.preventDefault();
       dispatch({ type: "init" });
 
-      toast.success("User successfully added");
+      toast.success("User successfully Updated");
       contextData.setIsUserAdded(true);
       contextData.setLoadingData(false);
+
+      if(closeBTn){
+        handleCloseModal();
+      }
 
       setTimeout(() => {
         contextData.setLoadingData(true);
         contextData.setIsUserAdded(false);
       }, 500);
     }
-
-
-
   };
 
   return (
@@ -127,13 +137,23 @@ function UserForm({ formMode, userData }) {
         onSubmit={formMode == "add" ? addUserDetails : updateUserDetails}
         ref={addUserRef}
       >
+        <button
+          type="button"
+          className="btn-close"
+          data-bs-dismiss="modal"
+          data-bs-target={`#userID_${editUserID}`}
+          aria-label="Close"
+          ref={closeBTn}
+          hidden
+        ></button>
         <div className="b-0 m-0 p-0 col-sm-9 align-items-center  text-middle d-flex">
           {formMode == "edit" ? (
             <button
-            hidden={true}
-            ref={handleUpdateButton}
+              hidden={true}
+              ref={handleUpdateButton}
               className="btn btn-info text-black"
               onClick={handleGetUsers}
+              
             >
               GetUser Details
             </button>
@@ -143,6 +163,7 @@ function UserForm({ formMode, userData }) {
           <div className="input-group mb-3 w-25 justify-content-center ">
             <span className="input-group-text">User ID</span>
             <input
+              name="userID"
               defaultValue={
                 formMode == "add"
                   ? contextData.data[contextData.data.length - 1].id + 1
@@ -163,12 +184,11 @@ function UserForm({ formMode, userData }) {
               User Creation Date & Time
             </small>
           </div>
-     
-            <small className="pt-1">
-              <p className="m-0">{state.userCreationDate}</p>
-              <p>{state.userCreationTime}</p>
-            </small>
 
+          <small className="pt-1">
+            <p className="m-0">{state.userCreationDate}</p>
+            <p>{state.userCreationTime}</p>
+          </small>
         </div>
 
         <div className="col-md-4">
@@ -183,6 +203,7 @@ function UserForm({ formMode, userData }) {
             id="firstname"
             required
             defaultValue={state.first_name}
+            
           />
           <div className="valid-feedback">Looks good!</div>
           <div className="invalid-feedback">Please enter your Firstname.</div>
@@ -394,7 +415,7 @@ function UserForm({ formMode, userData }) {
         <div className="col-6 row justify-content-evenly">
           <div className="col-md-6 mb-2  justify-content-md-center d-flex align-items-center">
             <div className=" has-validation ">
-              <label className="form-label text-center">Select Gender</label>
+              <span className="form-label text-center">Select Gender</span>
               <div className="form-check ">
                 <label htmlFor="male" className="form-check-lable">
                   Male
@@ -448,7 +469,7 @@ function UserForm({ formMode, userData }) {
 
           <div className="col-md-6 d-flex justify-content-md-center align-items-center">
             <div>
-              <label className="form-label">User Role</label>
+              <label className="form-label" htmlFor="admin">User Role</label>
               <div className="form-check">
                 <input
                   className="form-check-input"

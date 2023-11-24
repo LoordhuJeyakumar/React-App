@@ -1,4 +1,4 @@
-import React, { useContext, useReducer, useState } from "react";
+import React, { useContext, useReducer, useRef, useState } from "react";
 import UserForm from "./UserForm";
 import { DataContext } from "../App";
 import { initialState, reducer } from "../reducers/FormReducer";
@@ -8,16 +8,19 @@ function ActionButton({ eachData, actionBtnType }) {
   const [state, dispatch] = useReducer(reducer, initialState);
   let actionButtons = [];
   const [userData, SetUserData] = useState(eachData);
+  const [editUserID, setEditUserID] = useState(null);
+  const modalCloseBtn = useRef(null)
 
   const apiData = useContext(DataContext);
 
   const userDob = new Date(eachData.dob)
  
 
-  const getUserDetails = (userID) => {
+  const getUserDetails = (event) => {
 
     SetUserData(eachData);
-
+    console.log(eachData.id);
+    setEditUserID(eachData.id)
     dispatch({
       type: "updateUser",
       payLoad:{ value:userData,}
@@ -261,13 +264,14 @@ function ActionButton({ eachData, actionBtnType }) {
                 ></button>
               </div>
               <div className="d-flex dataModelBox">
-                <UserForm formMode={"edit"} userData={userData}/>
+                <UserForm modalCloseBtn={modalCloseBtn} formMode={"edit"} userData={userData} setEditUserID={setEditUserID} editUserID={editUserID} />
               </div>
               <div className="modal-footer">
                 <button
                   type="button"
                   className="btn btn-secondary"
                   data-bs-dismiss="modal"
+                  ref={modalCloseBtn}
                 >
                   Close
                 </button>

@@ -2,7 +2,6 @@ import React from "react";
 import ActionButton from "./ActionButton";
 
 function Table({ pageData, actionBtnType }) {
-  console.log(pageData);
   return (
     <div>
       <table className="table  table-dark table-hover">
@@ -30,7 +29,10 @@ function Table({ pageData, actionBtnType }) {
                 <td>{eachData.admin ? "Admin" : "User"}</td>
                 <td>{eachData.userStatus ? "Active" : "In-Active"}</td>
                 <td className="text-center">
-                 <ActionButton eachData={eachData} actionBtnType={actionBtnType} />
+                  <ActionButton
+                    eachData={eachData}
+                    actionBtnType={actionBtnType}
+                  />
                 </td>
               </tr>
             );
