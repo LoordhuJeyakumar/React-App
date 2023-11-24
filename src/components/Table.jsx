@@ -2,6 +2,7 @@ import React from "react";
 import ActionButton from "./ActionButton";
 
 function Table({ pageData, actionBtnType }) {
+  console.log(pageData);
   return (
     <div>
       <table className="table  table-dark table-hover">

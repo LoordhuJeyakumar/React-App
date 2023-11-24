@@ -1,30 +1,56 @@
-import React, { useContext, useReducer, useRef } from "react";
+import React, { useContext, useEffect, useReducer, useRef } from "react";
 import { initialState, reducer } from "../reducers/FormReducer";
-import { ToastContainer, toast } from "react-toastify";
 
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 import { DataContext } from "../App";
+import { toast } from "react-toastify";
 
-function UserForm({ formMode }) {
+function UserForm({ formMode, userData }) {
   let [state, dispatch] = useReducer(reducer, initialState);
   const addUserRef = useRef(null);
-
   const contextData = useContext(DataContext);
+  const creationDateTimeStamp = Date.now();
+  const creationDate = new Date(creationDateTimeStamp);
+  const handleUpdateButton =  useRef(null)
+
+  if(formMode=='edit'){
+    useEffect(()=>{
+      if(handleUpdateButton){
+       handleUpdateButton.current.click()
+      }
+    },[])
+  }
 
   const handleInputChange = (event) => {
+  
     dispatch({
       type: "inputChange",
       payLoad: { name: event.target.name, value: event.target.value },
     });
   };
 
+  const handleGenderChange = (event) => {
+    dispatch({
+      type: "gender",
+      payLoad: { value: event.target.value },
+    });
+  };
+
   const handleUserTypeChange = (event) => {
     dispatch({
       type: "userType",
+      payLoad: { value: event.target.value == "true" },
+    });
+  };
+
+  const handleStateSelect = (event) => {
+
+    dispatch({
+      type: "selctState",
       payLoad: {
         name: event.target.name,
-        value: event.target.value == "true" ? true : false,
+        value: event.target.selectedOptions[0].value,
       },
     });
   };
@@ -52,19 +78,76 @@ function UserForm({ formMode }) {
       }, 500);
     }
   }
+  function handleGetUsers(event) {
+    event.preventDefault();
+    dispatch({
+      type: "creationDate",
+      payLoad: {
+        userCreationDate: creationDate.toLocaleDateString(),
+        userCreationTime: creationDate.toLocaleTimeString(),
+        userCreationTimeStamp: creationDateTimeStamp
+      },
+    });
+
+    dispatch({ type: "updateUser", payLoad: userData });
+  }
+
+  const updateUserDetails = (event) => {
+    if (!addUserRef.current.checkValidity()) {
+      toast.error("Please fill out all required fields");
+      event.preventDefault();
+      event.stopPropagation();
+    }
+    addUserRef.current.classList.add("was-validated");
+    if (addUserRef.current.checkValidity()) {
+      /* axios.put("http://localhost:3000/usersDetails", state); */
+
+      event.preventDefault();
+      dispatch({ type: "init" });
+
+      toast.success("User successfully added");
+      contextData.setIsUserAdded(true);
+      contextData.setLoadingData(false);
+
+      setTimeout(() => {
+        contextData.setLoadingData(true);
+        contextData.setIsUserAdded(false);
+      }, 500);
+    }
+
+
+
+  };
+
   return (
     <div>
       <form
         className="row g-3 needs-validation p-4"
         noValidate
-        onSubmit={addUserDetails}
+        onSubmit={formMode == "add" ? addUserDetails : updateUserDetails}
         ref={addUserRef}
       >
-        <div className="col-md-12">
-          <div className="input-group mb-3 w-25 justify-content-center">
+        <div className="b-0 m-0 p-0 col-sm-9 align-items-center  text-middle d-flex">
+          {formMode == "edit" ? (
+            <button
+            hidden={true}
+            ref={handleUpdateButton}
+              className="btn btn-info text-black"
+              onClick={handleGetUsers}
+            >
+              GetUser Details
+            </button>
+          ) : (
+            ""
+          )}
+          <div className="input-group mb-3 w-25 justify-content-center ">
             <span className="input-group-text">User ID</span>
             <input
-              value={contextData.data[contextData.data.length - 1].id + 1}
+              defaultValue={
+                formMode == "add"
+                  ? contextData.data[contextData.data.length - 1].id + 1
+                  : state.id
+              }
               type="text"
               readOnly
               className="form-control w-50 border-0"
@@ -74,21 +157,19 @@ function UserForm({ formMode }) {
           </div>
         </div>
 
-        {/*  <div className="col-md-8 d-flex flex-column align-items-center">
-          <img
-            src="../../src/assets/undraw_male_avatar_g98d.svg"
-            className="img-thumbnail"
-            alt="Profile Picture"
-          />
-          <div className="input-group mb-3 w-50 has-validation">
-            <input
-              onChange={handleProfilePic}
-              type="file"
-              className="form-control profilePic"
-              id="inputGroupFile02"
-            />
+        <div className="b-0 m-0 p-0 col-sm-3 justify-content-center align-items-end d-flex flex-column">
+          <div>
+            <small htmlFor="firstname" className="form-label ">
+              User Creation Date & Time
+            </small>
           </div>
-        </div> */}
+     
+            <small className="pt-1">
+              <p className="m-0">{state.userCreationDate}</p>
+              <p>{state.userCreationTime}</p>
+            </small>
+
+        </div>
 
         <div className="col-md-4">
           <label htmlFor="firstname" className="form-label">
@@ -101,7 +182,7 @@ function UserForm({ formMode }) {
             className="form-control ps-1"
             id="firstname"
             required
-            value={state.first_name}
+            defaultValue={state.first_name}
           />
           <div className="valid-feedback">Looks good!</div>
           <div className="invalid-feedback">Please enter your Firstname.</div>
@@ -117,7 +198,7 @@ function UserForm({ formMode }) {
             id="lastname"
             required
             onChange={handleInputChange}
-            value={state.last_name}
+            defaultValue={state.last_name}
           />
           <div className="valid-feedback">Looks good!</div>
           <div className="invalid-feedback">Please enter your Lastname.</div>
@@ -135,7 +216,7 @@ function UserForm({ formMode }) {
               id="email"
               aria-describedby="inputGroupPrepend"
               required
-              value={state.email}
+              defaultValue={state.email}
             />
             <div className="invalid-feedback">Please enter your e-mail.</div>
           </div>
@@ -147,7 +228,7 @@ function UserForm({ formMode }) {
           </label>
           <div className="input-group has-validation">
             <input
-              value={state.qualification}
+              defaultValue={state.qualification}
               onChange={handleInputChange}
               name="qualification"
               type="text"
@@ -168,7 +249,10 @@ function UserForm({ formMode }) {
           </label>
           <div className="input-group has-validation">
             <input
-              value={state.dob}
+              defaultValue={state.dob}
+              format="yyyy-mm-dd"
+              data-date=""
+              data-date-format="DD MMMM YYYY"
               onChange={(event) => {
                 dispatch({
                   type: "dob",
@@ -197,7 +281,7 @@ function UserForm({ formMode }) {
           </label>
           <div className="input-group has-validation">
             <input
-              value={state.phone}
+              defaultValue={state.phone}
               onChange={handleInputChange}
               name="phone"
               type="number"
@@ -217,7 +301,7 @@ function UserForm({ formMode }) {
             City
           </label>
           <input
-            value={state.city}
+            defaultValue={state.city}
             onChange={handleInputChange}
             name="city"
             type="text"
@@ -238,7 +322,7 @@ function UserForm({ formMode }) {
             className="form-select ps-2"
             id="state"
             required
-            onChange={handleInputChange}
+            onChange={handleStateSelect}
           >
             <option>Choose State...</option>
             <option value="Andhra Pradesh">Andhra Pradesh</option>
@@ -277,7 +361,7 @@ function UserForm({ formMode }) {
             Pincode
           </label>
           <input
-            value={state.pincode}
+            defaultValue={state.pincode}
             onChange={handleInputChange}
             name="pincode"
             type="number"
@@ -293,7 +377,7 @@ function UserForm({ formMode }) {
           <div className="input-group has-validation">
             <span className="input-group-text">Address</span>
             <textarea
-              value={state.address}
+              defaultValue={state.address}
               onChange={handleInputChange}
               name="address"
               required
@@ -316,13 +400,14 @@ function UserForm({ formMode }) {
                   Male
                 </label>
                 <input
-                  onChange={handleInputChange}
+                  onChange={handleGenderChange}
                   type="radio"
                   className="form-check-input ps-1"
                   id="male"
                   aria-describedby="inputGroupPrepend"
                   required
                   name="gender"
+                  checked={state.gender === "Male"}
                   value={"Male"}
                 />
               </div>
@@ -331,13 +416,14 @@ function UserForm({ formMode }) {
                   Female
                 </label>
                 <input
-                  onChange={handleInputChange}
-                  value={"Female"}
+                  onChange={handleGenderChange}
                   type="radio"
                   className="form-check-input"
                   id="female"
                   aria-describedby="inputGroupPrepend"
                   name="gender"
+                  value={"Female"}
+                  checked={state.gender === "Female"}
                 />
               </div>
               <div className="form-check">
@@ -345,13 +431,14 @@ function UserForm({ formMode }) {
                   Other
                 </label>
                 <input
-                  onChange={handleInputChange}
-                  value={"Other"}
+                  onChange={handleGenderChange}
                   type="radio"
                   className="form-check-input"
                   id="other"
                   aria-describedby="inputGroupPrepend"
                   name="gender"
+                  value={"Other"}
+                  checked={state.gender === "Other"}
                 />
               </div>
 
@@ -368,8 +455,9 @@ function UserForm({ formMode }) {
                   type="radio"
                   name="admin"
                   id="admin"
-                  value={true}
-                  onClick={handleUserTypeChange}
+                  checked={state.admin}
+                  onChange={handleUserTypeChange}
+                  value={1 == 1}
                 />
                 <label className="form-check-label w-100" htmlFor="admin">
                   Admin
@@ -382,8 +470,9 @@ function UserForm({ formMode }) {
                   type="radio"
                   name="admin"
                   id="user"
-                  value={false}
-                  onClick={handleUserTypeChange}
+                  value={1 != 1}
+                  checked={!state.admin}
+                  onChange={handleUserTypeChange}
                 />
                 <label className="form-check-label w-100" htmlFor="user">
                   User
@@ -410,7 +499,8 @@ function UserForm({ formMode }) {
                 type="checkbox"
                 role="switch"
                 id="activatSwitch"
-                defaultChecked
+                checked={state.userStatus}
+                value={state.userStatus}
                 onChange={(event) => {
                   dispatch({
                     type: "userStatus",
@@ -426,9 +516,15 @@ function UserForm({ formMode }) {
           </div>
 
           <div className="col-md-6  justify-content-center d-flex align-items-center">
-            <button className="btn btn-primary submitBtn" type="submit">
-              Add User
-            </button>
+            {formMode == "add" ? (
+              <button className="btn btn-primary submitBtn" type="submit">
+                Add User
+              </button>
+            ) : (
+              <button className="btn btn-success submitBtn" type="submit">
+                Update User
+              </button>
+            )}
           </div>
         </div>
       </form>

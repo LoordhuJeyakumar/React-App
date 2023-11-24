@@ -9,7 +9,7 @@ function CreateUser() {
       <h1 className="text-center pt-3">Add New User</h1>
       <div className="borderDesign"></div>
 
-      <UserForm/>
+      <UserForm formMode={"add"}/>
     </div>
   );
 }

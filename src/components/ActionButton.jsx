@@ -1,7 +1,31 @@
-import React from "react";
+import React, { useContext, useReducer, useState } from "react";
+import UserForm from "./UserForm";
+import { DataContext } from "../App";
+import { initialState, reducer } from "../reducers/FormReducer";
 
 function ActionButton({ eachData, actionBtnType }) {
+  const [formMode, setFormMode] = useState("add");
+  const [state, dispatch] = useReducer(reducer, initialState);
   let actionButtons = [];
+  const [userData, SetUserData] = useState(eachData);
+
+  const apiData = useContext(DataContext);
+
+  const userDob = new Date(eachData.dob)
+ 
+
+  const getUserDetails = (userID) => {
+
+    SetUserData(eachData);
+
+    dispatch({
+      type: "updateUser",
+      payLoad:{ value:userData,}
+    });
+
+   
+
+  };
 
   if (actionBtnType == "view") {
     return (
@@ -137,11 +161,11 @@ function ActionButton({ eachData, actionBtnType }) {
                     state="hover-jump"
                     style={{ width: "250px", height: "250px" }}
                   ></lord-icon>
-                  <div className="d-flex justify-content-between m-3">
+                  <div className="d-flex justify-content-around m-3">
                     <span className="card-text">
                       {eachData.admin ? (
                         <span>
-                          Admin
+                          Admin {'    '}
                           <img
                             src="../../src/assets/protection.png"
                             alt="Admin User"
@@ -150,7 +174,7 @@ function ActionButton({ eachData, actionBtnType }) {
                         </span>
                       ) : (
                         <span>
-                          User
+                          User {'    '}
                           <img
                             src="../../src/assets/user.png"
                             style={{ width: "10px" }}
@@ -162,7 +186,7 @@ function ActionButton({ eachData, actionBtnType }) {
                     <span className="card-text">
                       {eachData.userStatus ? (
                         <span>
-                          Active
+                          Active   {'    '}
                           <img
                             src="../../src/assets/check.png"
                             alt="Active"
@@ -171,7 +195,7 @@ function ActionButton({ eachData, actionBtnType }) {
                         </span>
                       ) : (
                         <span>
-                          In-Active
+                          In-Active {'    '}
                           <img
                             src="../../src/assets/multiply.png"
                             style={{ width: "10px" }}
@@ -204,23 +228,56 @@ function ActionButton({ eachData, actionBtnType }) {
         </div>
       </div>
     );
-  }else if (actionBtnType == "edit"){
-    return(
-        <div>
-             <button
+  } else if (actionBtnType == "edit") {
+    return (
+      <div>
+        <button
           className="btn text-black btn-warning"
           data-bs-toggle="modal"
           data-bs-target={`#userID_${eachData.id}`}
+          onClick={getUserDetails}
         >
           Edit User
         </button>
 
-        
+        <div
+          className="modal fade modal-xl"
+          id={`userID_${eachData.id}`}
+          tabIndex="-1"
+          aria-labelledby="exampleModalLabel"
+          aria-hidden="true"
+        >
+          <div className="modal-dialog ">
+            <div className="modal-content w-100">
+              <div className="modal-header">
+                <h1 className="modal-title fs-5" id="exampleModalLabel">
+                  Users Details
+                </h1>
+                <button
+                  type="button"
+                  className="btn-close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                ></button>
+              </div>
+              <div className="d-flex dataModelBox">
+                <UserForm formMode={"edit"} userData={userData}/>
+              </div>
+              <div className="modal-footer">
+                <button
+                  type="button"
+                  className="btn btn-secondary"
+                  data-bs-dismiss="modal"
+                >
+                  Close
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
-    )
+      </div>
+    );
   }
-
- 
 }
 
 export default ActionButton;

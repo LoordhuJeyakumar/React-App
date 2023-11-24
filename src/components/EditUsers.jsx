@@ -6,14 +6,23 @@ import DataPerPage from "./DataPerPage";
 import Pagination from "./Pagination";
 
 function EditUsers() {
-  const [nameFilter, setNameFilter] = useState(null);
+  const [nameFilter, setNameFilter] = useState(0);
   const [currentNavPage, setCurrentNavPage] = useState(1);
   const [contentPerPage, setContentPerPage] = useState(10);
   const apiData = useContext(DataContext);
+  
 
   let lastPostIndex = currentNavPage * contentPerPage;
   let firstPostIndex = lastPostIndex - contentPerPage;
-  let pageData = apiData.data.slice(firstPostIndex, lastPostIndex);
+  let pageData;
+  if (!nameFilter || nameFilter == "") {
+    pageData = apiData.data.slice(firstPostIndex, lastPostIndex);
+    ;
+  } else {
+    pageData = nameFilter;
+  }
+
+
 
   return (
     <div>
@@ -32,12 +41,22 @@ function EditUsers() {
         <InputDataList setNameFilter={setNameFilter} />
         </div>
         <div className="align-items-end d-flex">
-        <Pagination
+        {!nameFilter.length ? (
+              <Pagination
+              contentPerPage={contentPerPage}
+              totalData={apiData.data.length}
+              currentNavPage={currentNavPage}
+              setCurrentNavPage={setCurrentNavPage}
+              />
+            ) : (
+              ""
+            )}
+        {/* <Pagination
                 contentPerPage={contentPerPage}
                 totalData={apiData.data.length}
                 currentNavPage={currentNavPage}
                 setCurrentNavPage={setCurrentNavPage}
-              />
+              /> */}
         </div>
         </div>
 

@@ -3,7 +3,7 @@ import { DataContext } from "../App";
 
 function InputDataList({ setNameFilter }) {
   const apiData = useContext(DataContext);
- 
+
   const handleFilterName = (event) => {
     let userId = Number(event.target.value.slice(0, 2));
     let nameFilterArr = apiData.data.filter((each) => {
@@ -24,6 +24,7 @@ function InputDataList({ setNameFilter }) {
         type="text"
         list="usersList"
         className="form-control"
+        id="searchUsers"
       />
 
       <datalist id="usersList">

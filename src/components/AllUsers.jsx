@@ -12,7 +12,7 @@ function AllUsers() {
   const [contentPerPage, setContentPerPage] = useState(10);
   const [userFilter, setUserFilter] = useState("allUsers");
   const [filterdData, setFilterdData] = useState([]);
-  const [nameFilter, setNameFilter] = useState(null);
+  const [nameFilter, setNameFilter] = useState(0);
 
   useEffect(() => {
     let filterdArray = apiData.data.filter((eachData) => {
@@ -142,7 +142,7 @@ function AllUsers() {
             <InputDataList setNameFilter={setNameFilter} />
           </div>
           <div className="align-items-end mt-2 justify-content-end p-0 d-flex w-50">
-            {pageData.length > 1 ? (
+            {!nameFilter.length ? (
               <Pagination
                 contentPerPage={contentPerPage}
                 totalData={filterdData.length}
@@ -157,7 +157,7 @@ function AllUsers() {
 
         <Table pageData={pageData} actionBtnType={"view"}/>
         <div>
-          {pageData.length > 1 ? (
+          { !nameFilter.length ? (
             <Pagination
               contentPerPage={contentPerPage}
               totalData={filterdData.length}

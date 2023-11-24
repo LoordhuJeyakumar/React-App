@@ -11,9 +11,8 @@ function PaginationButtons({ mockData, pageLength, start, end }) {
       newDataArr.push(mockData.slice(i, j));
       setData(newDataArr);
     }
-    console.log(document.querySelector('pageBtn'));
   }, [pageLength]);
-  console.log(data!=undefined);
+
   const genratePageButton = () => {
     
     let pageIndexLength = 10;
