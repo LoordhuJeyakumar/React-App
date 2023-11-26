@@ -112,13 +112,6 @@
   color: black !important;
   box-shadow: 0 0 0.8em 0 rgb(4, 217, 255);
 }
-.dropdown-menu {
-  background: linear-gradient(
-    127.09deg,
-    rgba(6, 11, 40, 0.94) 19.41%,
-    rgba(10, 14, 35, 0.49) 76.65%
-  ) !important;
-}
 
 .dropdown-menu li a:hover {
   text-shadow: none;
@@ -126,35 +119,11 @@
   color: black !important;
   box-shadow: 0 0 0.8em 0 rgb(4, 217, 255);
 }
-/* 
-.input-group {
-  background: linear-gradient(
-    127.09deg,
-    rgba(6, 11, 40, 0.94) 19.41%,
-    rgba(10, 14, 35, 0.49) 76.65%
-  ) !important;
-  width: 65% !important;
-}
-
-.input-group .form-control{
-  background: transparent !important;
-  border: none;
-  border-bottom: 1px solid white;
-
-}
-.firstname, .lastname{
-  width: 23em;
-}
-.email{
-  width: 25em;
-}
-.phone{
-  width: 15em;
-} */
 
 .form-control,
 .input-group span,
-.form-select {
+.form-select,
+.dropdown-menu {
   background: linear-gradient(
     127.09deg,
     rgba(6, 11, 40, 0.94) 19.41%,
@@ -266,7 +235,8 @@ thead {
   border-bottom: 1px solid rgb(4, 217, 255);
 }
 
-.filterBox .input-group-text, .input-group-text {
+.filterBox .input-group-text,
+.input-group-text {
   background: transparent !important;
   border: none !important;
 }
@@ -303,13 +273,12 @@ thead {
 .modal-content {
   background: rgba(10, 14, 35, 0.49) !important;
 }
-.modal-body > table {
-  background: transparent !important;
-}
+.modal-body > table,
 .dataModelBox > .card {
   background: transparent !important;
 }
-.selectedName>p{
+
+.selectedName > p {
   padding-left: 2px;
   display: flex;
   align-items: center;
