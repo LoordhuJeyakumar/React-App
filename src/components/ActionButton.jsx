@@ -1,284 +1,137 @@
 import React, { useContext, useReducer, useRef, useState } from "react";
-import UserForm from "./UserForm";
-import { DataContext } from "../App";
 import { initialState, reducer } from "../reducers/FormReducer";
+import axios from "axios";
+import { toast } from "react-toastify";
+import { DataContext } from "../App";
+import ViewUserModal from "./ViewUserModal";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import EditUserModal from "./EditUserModal";
+import DeleteUsersModal from "./DeleteUsersModal";
 
 function ActionButton({ eachData, actionBtnType }) {
-  const [formMode, setFormMode] = useState("add");
-  const [state, dispatch] = useReducer(reducer, initialState);
-  let actionButtons = [];
+  const navigate = useNavigate();
+  const location = useLocation();
+  // Destructure the useReducer hook to access the  dispatch function
+  const [, dispatch] = useReducer(reducer, initialState);
+
+  // Create a local state variable to store user data
   const [userData, SetUserData] = useState(eachData);
+
+  // Create a local state variable to store the ID of the user being edited
   const [editUserID, setEditUserID] = useState(null);
-  const modalCloseBtn = useRef(null)
 
-  const apiData = useContext(DataContext);
+  // Create a useRef hook to reference the modal close button and cancel button
+  const cancelBtnRef = useRef(null);
 
-  const userDob = new Date(eachData.dob)
- 
+  const contextData = useContext(DataContext);
 
-  const getUserDetails = (event) => {
-
+  // Define a function to get user details and update the state accordingly
+  const getUserDetails = () => {
+    navigate(eachData.id);
+    // Update the userData state with the current data
     SetUserData(eachData);
-    console.log(eachData.id);
-    setEditUserID(eachData.id)
+
+    // Update the editUserID state with the ID of the user being edited
+    setEditUserID(eachData.id);
+
+    // Dispatch an action to update the userData in the reducer
     dispatch({
       type: "updateUser",
-      payLoad:{ value:userData,}
+      payLoad: { value: userData },
     });
-
-   
-
   };
 
+  const handleDeleteUser = () => {
+    location.state = { delete: true };
+    
+    let deletUserID = eachData.id;
+    axios
+      .delete(`http://localhost:3000/usersDetails/${deletUserID}`)
+      .then((response) => {
+        if (response.status == 200) {
+          toast.info("User successfully Deleted");
+          contextData.setIsUserAdded(true);
+          contextData.setLoadingData(false);
+
+          if (cancelBtnRef) {
+            cancelBtnRef.current.click();
+          }
+          navigate(-1);
+          setTimeout(() => {
+            contextData.setLoadingData(true);
+            contextData.setIsUserAdded(false);
+          }, 500);
+        }
+    
+      })
+      .catch((error)=>{
+        if (cancelBtnRef) {
+          cancelBtnRef.current.click();
+        }
+        console.error('Faild to delete user', error);
+      })
+  };
+
+  // Check if the action button type is "view"
   if (actionBtnType == "view") {
+    // Return a React component that displays user details within a modal
     return (
-      <div>
-        <button
-          className="btn btn-primary"
-          data-bs-toggle="modal"
-          data-bs-target={`#userID_${eachData.id}`}
-        >
-          View User
-        </button>
-        <div
-          className="modal fade modal-lg"
-          id={`userID_${eachData.id}`}
-          tabIndex="-1"
-          aria-labelledby="exampleModalLabel"
-          aria-hidden="true"
-        >
-          <div className="modal-dialog ">
-            <div className="modal-content w-100">
-              <div className="modal-header">
-                <h1 className="modal-title fs-5" id="exampleModalLabel">
-                  Users Details
-                </h1>
-                <button
-                  type="button"
-                  className="btn-close"
-                  data-bs-dismiss="modal"
-                  aria-label="Close"
-                ></button>
-              </div>
-              <div className="d-flex dataModelBox">
-                <div className="modal-body d-flex">
-                  <table className="table table-borderless table-hover table-dark">
-                    <tbody>
-                      <tr>
-                        <th scope="row" className="text-end align-middle">
-                          Fullname
-                        </th>
-                        <th className="text-center align-middle">
-                          {eachData.first_name + " " + eachData.last_name}
-                        </th>
-                      </tr>
-                      <tr>
-                        <th scope="row" className="text-end align-middle">
-                          Email
-                        </th>
-                        <td className="text-end d-flex align-items-center">
-                          <lord-icon
-                            src="https://cdn.lordicon.com/nqisoomz.json"
-                            trigger="in"
-                            delay="1500"
-                            state="in-assembly"
-                            style={{ width: "35px", height: "35px" }}
-                          ></lord-icon>
-                          &nbsp;
-                          {eachData.email}
-                        </td>
-                      </tr>
-                      <tr>
-                        <th scope="row" className="text-end align-middle">
-                          Phone
-                        </th>
-                        <td className="text-end d-flex align-items-center">
-                          <lord-icon
-                            src="https://cdn.lordicon.com/bgcyfijv.json"
-                            trigger="hover"
-                            style={{ width: "35px", height: "35px" }}
-                          ></lord-icon>
-                          {eachData.phone}
-                        </td>
-                      </tr>
-                      <tr>
-                        <th scope="row" className="text-end align-middle">
-                          Date of Birth
-                        </th>
-                        <td className="text-end d-flex align-items-center">
-                          <lord-icon
-                            src="https://cdn.lordicon.com/dkanzxbo.json"
-                            trigger="hover"
-                            style={{ width: "35px", height: "35px" }}
-                          ></lord-icon>{" "}
-                          {eachData.dob}{" "}
-                        </td>
-                      </tr>
-                      <tr>
-                        <th scope="row" className="text-end align-middle">
-                          Gender
-                        </th>
-                        <td className="text-end d-flex align-items-center">
-                          <lord-icon
-                            src={
-                              eachData.gender == "Female"
-                                ? "https://cdn.lordicon.com/pyarizrk.json"
-                                : "https://cdn.lordicon.com/mebvgwrs.json"
-                            }
-                            trigger="in"
-                            delay="1500"
-                            state="in-reveal"
-                            style={{ width: "35px", height: "35px" }}
-                          ></lord-icon>
-
-                          {eachData.gender}
-                        </td>
-                      </tr>
-                      <tr>
-                        <th scope="row" className="text-end align-middle">
-                          Qualification
-                        </th>
-                        <td className="text-end d-flex align-items-center">
-                          <lord-icon
-                            src="https://cdn.lordicon.com/svsiboke.json"
-                            trigger="in"
-                            delay="1500"
-                            state="in-reveal"
-                            style={{ width: "35px", height: "35px" }}
-                          ></lord-icon>
-
-                          {eachData.qualification}
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-                <div className="card" style={{ width: "18rem" }}>
-                  <lord-icon
-                    src={
-                      eachData.gender == "Female"
-                        ? "https://cdn.lordicon.com/zbblnakr.json"
-                        : " https://cdn.lordicon.com/zfmcashd.json"
-                    }
-                    trigger="hover"
-                    state="hover-jump"
-                    style={{ width: "250px", height: "250px" }}
-                  ></lord-icon>
-                  <div className="d-flex justify-content-around m-3">
-                    <span className="card-text">
-                      {eachData.admin ? (
-                        <span>
-                          Admin {'    '}
-                          <img
-                            src="../../src/assets/protection.png"
-                            alt="Admin User"
-                            style={{ width: "10px" }}
-                          />
-                        </span>
-                      ) : (
-                        <span>
-                          User {'    '}
-                          <img
-                            src="../../src/assets/user.png"
-                            style={{ width: "10px" }}
-                            alt="Normal User"
-                          />
-                        </span>
-                      )}
-                    </span>
-                    <span className="card-text">
-                      {eachData.userStatus ? (
-                        <span>
-                          Active   {'    '}
-                          <img
-                            src="../../src/assets/check.png"
-                            alt="Active"
-                            style={{ width: "10px" }}
-                          />
-                        </span>
-                      ) : (
-                        <span>
-                          In-Active {'    '}
-                          <img
-                            src="../../src/assets/multiply.png"
-                            style={{ width: "10px" }}
-                            alt="In-Active"
-                          />
-                        </span>
-                      )}
-                    </span>
-                  </div>
-                  <div className="card-body">
-                    <h5 className="card-title">Address</h5>
-                    <p className="card-text">{eachData.address}</p>
-                    <p>
-                      {eachData.city} - {eachData.pincode}
-                    </p>
-                  </div>
-                </div>
-              </div>
-              <div className="modal-footer">
-                <button
-                  type="button"
-                  className="btn btn-secondary"
-                  data-bs-dismiss="modal"
-                >
-                  Close
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+      <>
+        <Link to={`${eachData.id}`}>
+          <button
+            className="btn btn-primary"
+            data-bs-toggle="modal"
+            data-bs-target={`#userID_${eachData.id}`}
+            onClick={() => {
+              navigate(eachData.id);
+            }}
+          >
+            View User
+          </button>
+        </Link>
+        <ViewUserModal eachData={eachData} />
+      </>
     );
-  } else if (actionBtnType == "edit") {
+  }
+  // Check if the action button type is "edit"
+  else if (actionBtnType == "edit") {
+    // Render the edit user modal
+    return (
+      <>
+        <Link to={`${eachData.id}`}>
+          <button
+            className="btn text-black btn-warning"
+            data-bs-toggle="modal"
+            data-bs-target={`#userID_${eachData.id}`}
+            onClick={getUserDetails}
+          >
+            Edit User
+          </button>
+        </Link>
+        {/* Create a button to trigger the edit user modal */}
+        <EditUserModal eachData={eachData} editUserID={editUserID} />
+      </>
+    );
+  } else if (actionBtnType == "delete") {
     return (
       <div>
-        <button
-          className="btn text-black btn-warning"
-          data-bs-toggle="modal"
-          data-bs-target={`#userID_${eachData.id}`}
-          onClick={getUserDetails}
-        >
-          Edit User
-        </button>
+        {/* Create a button to trigger the edit user modal */}
+        <Link to={`${eachData.id}`}>
+          <button
+            className="btn btn-danger"
+            data-bs-toggle="modal"
+            data-bs-target={`#userID_${eachData.id}`}
+            onClick={getUserDetails}
+          >
+            Delete User
+          </button>
+        </Link>
 
-        <div
-          className="modal fade modal-xl"
-          id={`userID_${eachData.id}`}
-          tabIndex="-1"
-          aria-labelledby="exampleModalLabel"
-          aria-hidden="true"
-        >
-          <div className="modal-dialog ">
-            <div className="modal-content w-100">
-              <div className="modal-header">
-                <h1 className="modal-title fs-5" id="exampleModalLabel">
-                  Users Details
-                </h1>
-                <button
-                  type="button"
-                  className="btn-close"
-                  data-bs-dismiss="modal"
-                  aria-label="Close"
-                ></button>
-              </div>
-              <div className="d-flex dataModelBox">
-                <UserForm modalCloseBtn={modalCloseBtn} formMode={"edit"} userData={userData} setEditUserID={setEditUserID} editUserID={editUserID} />
-              </div>
-              <div className="modal-footer">
-                <button
-                  type="button"
-                  className="btn btn-secondary"
-                  data-bs-dismiss="modal"
-                  ref={modalCloseBtn}
-                >
-                  Close
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
+        <DeleteUsersModal
+          handleDeleteUser={handleDeleteUser}
+          eachData={eachData}
+          cancelBtnRef={cancelBtnRef}
+        />
       </div>
     );
   }

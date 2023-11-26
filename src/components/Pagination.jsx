@@ -65,7 +65,7 @@ function Pagination({
               return (
                 <li className="page-item" key={pageNum}>
                   <button
-                    className="page-link p-2 active"
+                    className="page-link p-2 activeBtn"
                     onClick={() => handlePageChange(pageNum)}
                   >
                     {pageNum}

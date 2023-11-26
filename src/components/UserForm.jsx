@@ -11,8 +11,10 @@ import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 import { DataContext } from "../App";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 function UserForm({ formMode, userData, editUserID, modalCloseBtn }) {
+  const navigate = useNavigate();
   let [state, dispatch] = useReducer(reducer, initialState);
   const addUserRef = useRef(null);
   const contextData = useContext(DataContext);
@@ -20,6 +22,17 @@ function UserForm({ formMode, userData, editUserID, modalCloseBtn }) {
   const creationDate = new Date(creationDateTimeStamp);
   const handleUpdateButton = useRef(null);
   const closeBTn = useRef();
+
+  useEffect(() => {
+    dispatch({
+      type: "creationDate",
+      payLoad: {
+        userCreationDate: creationDate.toLocaleDateString(),
+        userCreationTime: creationDate.toLocaleTimeString(),
+        userCreationTimeStamp: creationDateTimeStamp,
+      },
+    });
+  }, []);
 
   if (formMode == "edit") {
     useEffect(() => {
@@ -97,11 +110,12 @@ function UserForm({ formMode, userData, editUserID, modalCloseBtn }) {
 
     dispatch({ type: "updateUser", payLoad: userData });
   }
-  const handleCloseModal=(event)=>{
-    closeBTn.current.click()
-  }
+  const handleCloseModal = (event) => {
+    closeBTn.current.click();
+  };
 
   const updateUserDetails = (event) => {
+    navigate(-1);
     if (!addUserRef.current.checkValidity()) {
       toast.error("Please fill out all required fields");
       event.preventDefault();
@@ -109,23 +123,36 @@ function UserForm({ formMode, userData, editUserID, modalCloseBtn }) {
     }
     addUserRef.current.classList.add("was-validated");
     if (addUserRef.current.checkValidity()) {
-      axios.put(`http://localhost:3000/usersDetails/${editUserID}`, state);
-  
       event.preventDefault();
-      dispatch({ type: "init" });
+      axios
+        .put(`http://localhost:3000/usersDetails/${editUserID}`, state)
+        .then((response) => {
+         
+          if (response.status === 200) {
+            
+            dispatch({ type: "init" });
 
-      toast.success("User successfully Updated");
-      contextData.setIsUserAdded(true);
-      contextData.setLoadingData(false);
+            toast.info("User successfully Updated");
+            contextData.setIsUserAdded(true);
+            contextData.setLoadingData(false);
 
-      if(closeBTn){
-        handleCloseModal();
-      }
+            if (closeBTn) {
+              handleCloseModal();
+            }
 
-      setTimeout(() => {
-        contextData.setLoadingData(true);
-        contextData.setIsUserAdded(false);
-      }, 500);
+            setTimeout(() => {
+              contextData.setLoadingData(true);
+              contextData.setIsUserAdded(false);
+            }, 500);
+          }
+        })
+        .catch(function (error) {
+          alert(error.message)
+      
+          toast.error(error.message)
+          console.log(error.toJSON());
+
+        });
     }
   };
 
@@ -153,7 +180,6 @@ function UserForm({ formMode, userData, editUserID, modalCloseBtn }) {
               ref={handleUpdateButton}
               className="btn btn-info text-black"
               onClick={handleGetUsers}
-              
             >
               GetUser Details
             </button>
@@ -203,7 +229,6 @@ function UserForm({ formMode, userData, editUserID, modalCloseBtn }) {
             id="firstname"
             required
             defaultValue={state.first_name}
-            
           />
           <div className="valid-feedback">Looks good!</div>
           <div className="invalid-feedback">Please enter your Firstname.</div>
@@ -310,6 +335,8 @@ function UserForm({ formMode, userData, editUserID, modalCloseBtn }) {
               id="mobile"
               aria-describedby="inputGroupPrepend"
               required
+              minLength={10}
+              pattern="\d{9,10}"
             />
             <div className="invalid-feedback">
               Please enter valid mobile number.
@@ -469,7 +496,9 @@ function UserForm({ formMode, userData, editUserID, modalCloseBtn }) {
 
           <div className="col-md-6 d-flex justify-content-md-center align-items-center">
             <div>
-              <label className="form-label" htmlFor="admin">User Role</label>
+              <label className="form-label" htmlFor="admin">
+                User Role
+              </label>
               <div className="form-check">
                 <input
                   className="form-check-input"

@@ -14,7 +14,7 @@ let initialState = {
   pincode: "",
   userCreationDate: "",
   userCreationTime: "",
-  userCreationTimeStamp:0
+  userCreationTimeStamp: 0,
 };
 
 function reducer(state, action) {
@@ -41,6 +41,7 @@ function reducer(state, action) {
         ...state,
         userCreationDate: action.payLoad.userCreationDate,
         userCreationTime: action.payLoad.userCreationTime,
+        userCreationTimeStamp: action.payLoad.userCreationTimeStamp,
       };
     }
     case "dob": {
@@ -53,7 +54,6 @@ function reducer(state, action) {
       };
     }
     case "userType": {
-  
       return {
         ...state,
         admin: action.payLoad.value,
@@ -75,7 +75,7 @@ function reducer(state, action) {
         ...state,
         ...action.payLoad,
       };
-  
+
       return res;
     }
     default: {

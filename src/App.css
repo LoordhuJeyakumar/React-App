@@ -88,7 +88,7 @@
   margin-bottom: 22px !important;
 }
 
-.activeLink {
+.active {
   font-weight: 700 !important;
   color: rgb(4, 217, 255) !important;
   text-shadow: 2px 2px 15px;
@@ -281,7 +281,7 @@ thead {
   background: rgba(10, 14, 35, 0.49) !important;
 }
 
-.active {
+.activeBtn {
   background-color: aqua !important;
   color: black !important;
   top: -1px;
@@ -316,7 +316,4 @@ thead {
   color: aquamarine !important;
   background-color: none !important;
   width: 100%;
-}
-.selectedName>input{
-
 }

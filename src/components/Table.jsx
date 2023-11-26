@@ -26,8 +26,38 @@ function Table({ pageData, actionBtnType }) {
                 <td>{`${eachData.first_name} ${eachData.last_name}`}</td>
                 <td>{eachData.phone}</td>
                 <td>{eachData.email}</td>
-                <td>{eachData.admin ? "Admin" : "User"}</td>
-                <td>{eachData.userStatus ? "Active" : "In-Active"}</td>
+                <td>
+                  {eachData.admin ? (
+                    <>
+                      Admin
+                      <img
+                        src="../../src/assets/protection.png"
+                        alt="admin"
+                        style={{ width: 15 }}
+                      />
+                    </>
+                  ) : (
+                    <>
+                      User
+                      <img
+                        src="../../src/assets/user.png"
+                        alt="user"
+                        style={{ width: 15 }}
+                      />
+                    </>
+                  )}
+                </td>
+                <td>
+                  {eachData.userStatus ? (
+                    <span className="badge bg-success rounded-pill">
+                      Active{" "}
+                    </span>
+                  ) : (
+                    <span className="badge bg-danger rounded-pill">
+                      In-Active
+                    </span>
+                  )}
+                </td>
                 <td className="text-center">
                   <ActionButton
                     eachData={eachData}

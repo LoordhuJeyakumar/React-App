@@ -1,6 +1,49 @@
-import React from "react";
+import React, { useContext } from "react";
+import { DataContext } from "../App";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 
 function Dashboard() {
+  const data = useContext(DataContext);
+  const [searchParams, setSearchParams] = useSearchParams({
+    filterBy: '',
+  });
+
+  const navigate = useNavigate();
+  const totalUsers = data.data.length;
+  const adminUsersArr = [];
+  const normalUsersArr = [];
+  const activeUsers = [];
+  const inActiveUsers = [];
+  data.data.forEach((eachData) => {
+    if (eachData.admin) {
+      adminUsersArr.push(eachData);
+    } else {
+      normalUsersArr.push(eachData);
+    }
+  });
+
+  data.data.forEach((eachData) => {
+    if (eachData.userStatus) {
+      activeUsers.push(eachData);
+    } else {
+      inActiveUsers.push(eachData);
+    }
+  });
+
+  let dateArr = [];
+  for (let i = 0; i < 7; i++) {
+    const todayDate = new Date(Date.now());
+    todayDate.setDate(todayDate.getDate() - i);
+    dateArr.push(todayDate.getDate());
+  }
+  const newUsers = data.data.filter((eachData) => {
+    if (dateArr.length != 0) {
+      if (dateArr.includes(+eachData.userCreationDate.slice(3, 5))) {
+        return eachData;
+      }
+    }
+  });
+
   return (
     <div className="roll-out">
       <div className="container-fluid mt-2 justify-content-center row">
@@ -21,11 +64,11 @@ function Dashboard() {
             </div>
             <div className="borderDesign mb-3"></div>
 
-            <h1 className="display-1 fw-bold mb-2">10</h1>
+            <h1 className="display-1 fw-bold mb-2">{totalUsers}</h1>
 
-            <a href="#" className="card-link btn mt-4 p-2">
+            <Link className="card-link btn mt-4 p-2" to="all-users">
               View All Users
-            </a>
+            </Link>
           </div>
         </div>
 
@@ -44,11 +87,16 @@ function Dashboard() {
             </div>
             <div className="borderDesign mb-3"></div>
 
-            <h1 className="display-1 fw-bold mb-2">10</h1>
+            <h1 className="display-1 fw-bold mb-2">{adminUsersArr.length}</h1>
 
-            <a href="#" className="card-link btn mt-4 p-2">
+            <button className="btn card-link btn mt-4 p-2"  onClick={()=>{
+              navigate({
+                pathname: '/all-users',
+                search: '?filterBy=admin',
+              })
+            }}>
               View Admin Users
-            </a>
+            </button>
           </div>
         </div>
         {/*  */}
@@ -66,11 +114,16 @@ function Dashboard() {
             </div>
             <div className="borderDesign mb-3"></div>
 
-            <h1 className="display-1 fw-bold mb-2">10</h1>
+            <h1 className="display-1 fw-bold mb-2">{normalUsersArr.length}</h1>
 
-            <a href="#" className="card-link btn mt-4 p-2">
+            <button  className="btn card-link btn mt-4 p-2" onClick={()=>{
+              navigate({
+                pathname: '/all-users',
+                search: '?filterBy=user',
+              })
+            }}>
               View Normal Users
-            </a>
+            </button>
           </div>
         </div>
         {/*  */}
@@ -89,11 +142,16 @@ function Dashboard() {
             </div>
             <div className="borderDesign mb-3"></div>
 
-            <h1 className="display-1 fw-bold mb-2">10</h1>
+            <h1 className="display-1 fw-bold mb-2">{newUsers.length}</h1>
 
-            <a href="#" className="card-link btn mt-4 p-2">
+            <button className="btn card-link btn mt-4 p-2" onClick={()=>{
+              navigate({
+                pathname: '/all-users',
+                search: '?filterBy=newUsers',
+              })
+            }}>
               View New Users
-            </a>
+            </button>
           </div>
         </div>
         {/*  */}
@@ -112,11 +170,16 @@ function Dashboard() {
             </div>
             <div className="borderDesign mb-3"></div>
 
-            <h1 className="display-1 fw-bold mb-2">10</h1>
+            <h1 className="display-1 fw-bold mb-2">{activeUsers.length}</h1>
 
-            <a href="#" className="card-link btn mt-4 p-2">
+            <button className="card-link btn mt-4 p-2" onClick={()=>{
+              navigate({
+                pathname: '/all-users',
+                search: '?filterBy=activeUsers',
+              })
+            }}>
               View Active Users
-            </a>
+            </button>
           </div>
         </div>
         {/*  */}
@@ -135,11 +198,16 @@ function Dashboard() {
             </div>
             <div className="borderDesign mb-3"></div>
 
-            <h1 className="display-1 fw-bold mb-2">10</h1>
+            <h1 className="display-1 fw-bold mb-2">{inActiveUsers.length}</h1>
 
-            <a href="#" className="card-link btn mt-4 p-2">
+            <button className="btn card-link btn mt-4 p-2" onClick={()=>{
+              navigate({
+                pathname: '/all-users',
+                search: '?filterBy=inActiveUsers',
+              })
+            }}>
               View InActive Users
-            </a>
+            </button>
           </div>
         </div>
         {/*  */}
