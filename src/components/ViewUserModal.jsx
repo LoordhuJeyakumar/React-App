@@ -180,7 +180,7 @@ function ViewUserModal({ eachData }) {
                         <span>
                           Active {"    "}
                           <img
-                            src="src\assets\check.png"
+                            src="/public/check.png "
                             alt="Active"
                             style={{ width: "25px" }}
                           />
@@ -189,7 +189,7 @@ function ViewUserModal({ eachData }) {
                         <span>
                           In-Active {"    "}
                           <img
-                            src="src\assets\multiply.png"
+                            src="/public/multiply.png"
                             style={{ width: "25px" }}
                             alt="In-Active"
                           />
