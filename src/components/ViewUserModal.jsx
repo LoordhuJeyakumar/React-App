@@ -159,7 +159,7 @@ function ViewUserModal({ eachData }) {
                         <span>
                           Admin {"    "}
                           <img
-                            src="../../public/protection.png"
+                            src="/src/assets/protection.png"
                             alt="Admin User"
                             style={{ width: "25px" }}
                           />
@@ -168,7 +168,7 @@ function ViewUserModal({ eachData }) {
                         <span>
                           User {"    "}
                           <img
-                            src="../../public/user.png"
+                            src="/src/assets/user.png"
                             style={{ width: "25px" }}
                             alt="Normal User"
                           />
@@ -180,7 +180,7 @@ function ViewUserModal({ eachData }) {
                         <span>
                           Active {"    "}
                           <img
-                            src="../../public/check.png"
+                            src="/src/assets/check.png"
                             alt="Active"
                             style={{ width: "25px" }}
                           />
@@ -189,7 +189,7 @@ function ViewUserModal({ eachData }) {
                         <span>
                           In-Active {"    "}
                           <img
-                            src="../../public/multiply.png"
+                            src="/src/assets/multiply.png"
                             style={{ width: "25px" }}
                             alt="In-Active"
                           />
