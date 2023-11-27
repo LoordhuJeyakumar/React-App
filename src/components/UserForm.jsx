@@ -109,7 +109,7 @@ function UserForm({ formMode, userData, editUserID }) {
     // If the form is valid, proceed with user details submission
     if (addUserRef.current.checkValidity()) {
       // Send user details to the server using an HTTP POST request
-      axios.post("http://localhost:3000/usersDetails", state);
+      axios.post("https://usermanagement-api.onrender.com/usersDetails/", state);
 
       event.preventDefault();
       // Reset form state to initial values
@@ -173,7 +173,7 @@ function UserForm({ formMode, userData, editUserID }) {
       event.preventDefault();
       // Send user details update request to the server using an HTTP PUT request
       axios
-        .put(`http://localhost:3000/usersDetails/${editUserID}`, state)
+        .put(`https://usermanagement-api.onrender.com/usersDetails/${editUserID}`, state)
         .then((response) => {
           // Check if the update request was successful
           if (response.status === 200) {

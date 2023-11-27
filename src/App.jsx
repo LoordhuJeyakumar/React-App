@@ -31,7 +31,7 @@ function App() {
     if (!loadingData) {
       // Uses axios to make a GET request to the 'http://localhost:3000/usersDetails' endpoint
       axios
-        .get("http://localhost:3000/usersDetails")
+        .get("https://usermanagement-api.onrender.com/usersDetails/")
         .then((response) => {
           // Sets the 'data' state with the response data
           setData(response.data);

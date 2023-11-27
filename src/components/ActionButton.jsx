@@ -46,7 +46,7 @@ function ActionButton({ eachData, actionBtnType }) {
     
     let deletUserID = eachData.id;
     axios
-      .delete(`http://localhost:3000/usersDetails/${deletUserID}`)
+      .delete(`https://usermanagement-api.onrender.com/usersDetails/${deletUserID}`)
       .then((response) => {
         if (response.status == 200) {
           toast.info("User successfully Deleted");
