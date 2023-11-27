@@ -49,7 +49,7 @@ function ViewUserModal({ eachData }) {
               </div>
               <div className="d-flex dataModelBox row justify-content-center">
                 {/* Modal body with user information table */}
-                <div className="modal-body d-flex col-md-6 order-md-2">
+                <div className="modal-body d-flex col-md-6 order-2">
                   {/* Display user details in a table format */}
                   <table className="table table-borderless table-hover table-dark">
                     <tbody>
@@ -142,7 +142,7 @@ function ViewUserModal({ eachData }) {
                     </tbody>
                   </table>
                 </div>
-                <div className="card order-md-1" style={{ width: "18rem" }}>
+                <div className="card order-1" style={{ width: "18rem" }}>
                   <lord-icon
                     src={
                       eachData.gender == "Female"
