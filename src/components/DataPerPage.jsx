@@ -1,20 +1,14 @@
 import React from "react";
 
-function DataPerPage({
-  data,
-  setContentPerPage,
-  contentPerPage,
-  currentNavPage,
-  setCurrentNavPage,
-}) {
-  let lastPostIndex = currentNavPage * contentPerPage;
-  let firstPostIndex = lastPostIndex - contentPerPage;
-  let pageData;
-
-  pageData = data.slice(firstPostIndex, lastPostIndex);
-
+/* Define a DataPerPage function component with props 
+    -setContentPerPage function, 
+    -and setCurrentNavPage from parent component */
+function DataPerPage({ setContentPerPage, setCurrentNavPage }) {
+  // Handle content per page change
   const handleDataPerPage = (event) => {
+    // Reset current page to 1 when content per page changes
     setCurrentNavPage(1);
+    // Set content per page to the selected value
     setContentPerPage(event.target.value);
   };
   return (
@@ -22,6 +16,7 @@ function DataPerPage({
       <label className="input-group-text" htmlFor="showContent">
         Show Content
       </label>
+      {/* Display select dropdown to choose content per page */}
       <select
         name="filter"
         id="showContent"

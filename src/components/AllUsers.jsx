@@ -28,8 +28,6 @@ function AllUsers() {
   const [userFilter, setUserFilter] = useState(searchParams.get("filterBy"));
   const [filterdData, setFilterdData] = useState([]);
   const [nameFilter, setNameFilter] = useState(0);
-
-
   // Use useEffect to update the filtered user data whenever the userFilter state changes
   useEffect(() => {
     // Create a filtered array based on the selected userFilter

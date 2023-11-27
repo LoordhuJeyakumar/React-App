@@ -1,17 +1,30 @@
-import React, { useContext, useEffect, useRef } from "react";
-import { DataContext } from "../App";
+import React, { useEffect, useRef } from "react";
 
+// This component renders a pagination bar with page numbers and previous/next buttons
+/* 
+This is a function component that takes four props: 
+      -contentPerPage,  The number of items to display per page
+      -totalData, The total number of items
+      -currentNavPage, The current page number
+      -and setCurrentNavPage, A State function to update the current page number
+
+*/
 function Pagination({
   contentPerPage,
   totalData,
   currentNavPage,
   setCurrentNavPage,
 }) {
+  // Create an array to store the page numbers
   const totalPages = [];
+
+  // Ref elements for the previous and next buttons
   const previousBtnRef = useRef();
   const nextBtnRef = useRef();
 
+  // Use an useEffect hook to update the button states based on the current page number
   useEffect(() => {
+    // Disable the previous button if on the first page
     if (currentNavPage == 1) {
       if (previousBtnRef) {
         previousBtnRef.current.disabled = true;
@@ -20,6 +33,7 @@ function Pagination({
       previousBtnRef.current.disabled = false;
     }
 
+    // Disable the next button if on the last page
     if (currentNavPage == totalPages.length) {
       if (nextBtnRef) {
         nextBtnRef.current.disabled = true;
@@ -29,28 +43,30 @@ function Pagination({
     }
   }, [currentNavPage]);
 
+  // Generate the page numbers
   for (let i = 1; i <= Math.ceil(totalData / contentPerPage); i++) {
     totalPages.push(i);
   }
 
-  const handlePageChange = (pageNum, event) => {
-  
+  // Handle page number clicks
+  const handlePageChange = (pageNum) => {
     setCurrentNavPage(pageNum);
   };
   return (
-    <div >
+    <div>
+      {/* Render the pagination bar */}
       <nav className="paginationNav">
         <ul className="pagination justify-content-end m-0">
+          {/* Previous button */}
           <li className="page-item">
             <button
               className="page-link p-2 previousBtn"
               aria-label="Previous"
               ref={previousBtnRef}
+              // This is an event handler that decrements the currentNavPage state when the previous button is clicked
               onClick={(event) => {
-               
                 if (currentNavPage <= 1) {
                   event.target.disabled = true;
-              
                 } else {
                   event.target.disabled = false;
                   setCurrentNavPage(currentNavPage - 1);
@@ -60,8 +76,10 @@ function Pagination({
               Previous
             </button>
           </li>
+          {/* Page number links */}
           {totalPages.map((pageNum) => {
             if (pageNum == currentNavPage) {
+              // Active page number
               return (
                 <li className="page-item" key={pageNum}>
                   <button
@@ -74,6 +92,7 @@ function Pagination({
               );
             } else {
               return (
+                // Regular page number
                 <li className="page-item" key={pageNum}>
                   <button
                     className="page-link p-2"
@@ -86,16 +105,17 @@ function Pagination({
             }
           })}
 
+          {/* Next button */}
           <li className="page-item">
             <button
               className="page-link p-2 nextBtn"
               aria-label="Next"
               ref={nextBtnRef}
-              onClick={(event) => {
+              // This is an event handler that increments the currentNavPage state when the next button is clicked
+              onClick={() => {
                 if (currentNavPage < totalPages.length) {
-                 
                   setCurrentNavPage(currentNavPage + 1);
-                } 
+                }
               }}
             >
               Next

@@ -1,39 +1,50 @@
-import React, {
-  useContext,
-  useEffect,
-  useReducer,
-  useRef,
-  useState,
-} from "react";
+// Import React and necessary hooks
+import React, { useContext, useEffect, useReducer, useRef } from "react";
+// Import initial state and reducer function for managing form state
 import { initialState, reducer } from "../reducers/FormReducer";
 
+// Import ReactToastify CSS for styling notifications
 import "react-toastify/dist/ReactToastify.css";
-import axios from "axios";
-import { DataContext } from "../App";
-import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
+import axios from "axios"; // Import axios for making HTTP requests
+import { DataContext } from "../App"; // Import DataContext for accessing global data
+import { toast } from "react-toastify"; // Import toast function for displaying notifications
+import { useNavigate } from "react-router-dom"; // Import useNavigate hook for routing
 
-function UserForm({ formMode, userData, editUserID, modalCloseBtn }) {
+function UserForm({ formMode, userData, editUserID }) {
+  // Define useNavigate hook to navigate between routes
   const navigate = useNavigate();
+  // Use useReducer hook to manage the form state
   let [state, dispatch] = useReducer(reducer, initialState);
+  // Define useRef hook to store references to the addUserRef input and handleUpdateButton btn and close btn
   const addUserRef = useRef(null);
-  const contextData = useContext(DataContext);
-  const creationDateTimeStamp = Date.now();
-  const creationDate = new Date(creationDateTimeStamp);
   const handleUpdateButton = useRef(null);
   const closeBTn = useRef();
 
+  // Define contextData variable to access the DataContext context
+  const contextData = useContext(DataContext);
+
+  // Define creationDateTimeStamp variable to store the current timestamp
+  const creationDateTimeStamp = Date.now();
+  // Create a new Date object from the timestamp
+  const creationDate = new Date(creationDateTimeStamp);
+
+  // Use useEffect hook to initialize the user creation date and time in the form state
   useEffect(() => {
     dispatch({
+      // Action type to update the user creation date and time
       type: "creationDate",
       payLoad: {
+        // User creation date and time in a localized format
         userCreationDate: creationDate.toLocaleDateString(),
         userCreationTime: creationDate.toLocaleTimeString(),
+        // User creation timestamp in milliseconds
         userCreationTimeStamp: creationDateTimeStamp,
       },
     });
   }, []);
 
+  // If the form mode is "edit", automatically trigger the update button click
+  // whenever the editUserID changes
   if (formMode == "edit") {
     useEffect(() => {
       if (handleUpdateButton) {
@@ -42,63 +53,89 @@ function UserForm({ formMode, userData, editUserID, modalCloseBtn }) {
     }, [editUserID]);
   }
 
+  // Handle input change for any form input text element
   const handleInputChange = (event) => {
     dispatch({
+      // Action type indicating an input change
       type: "inputChange",
-      payLoad: { name: event.target.name, value: event.target.value },
+      payLoad: {
+        // Name of the input field
+        name: event.target.name,
+        // Value entered in the input field
+        value: event.target.value,
+      },
     });
   };
 
+  // Handle gender radio button change
   const handleGenderChange = (event) => {
     dispatch({
-      type: "gender",
-      payLoad: { value: event.target.value },
+      type: "gender", // Action type indicating a gender change
+      payLoad: { value: event.target.value }, // Selected gender value
     });
   };
 
+  // Handle user type radio button change
   const handleUserTypeChange = (event) => {
+    // Convert the checkbox value to a boolean
+    const userTypeValue = event.target.value == "true";
     dispatch({
-      type: "userType",
-      payLoad: { value: event.target.value == "true" },
+      type: "userType", // Action type indicating a user type change
+      payLoad: { value: userTypeValue }, // Selected user type value (boolean)
     });
   };
 
+  // Handle state selection dropdown change
   const handleStateSelect = (event) => {
     dispatch({
-      type: "selctState",
+      type: "selctState", // Action type indicating a state selection change
       payLoad: {
-        name: event.target.name,
-        value: event.target.selectedOptions[0].value,
+        name: event.target.name, // Name of the state selection dropdown
+        value: event.target.selectedOptions[0].value, // Selected state value
       },
     });
   };
 
   function addUserDetails(event) {
+    // Prevent form submission if there are any invalid fields
     if (!addUserRef.current.checkValidity()) {
       toast.error("Please fill out all required fields");
       event.preventDefault();
       event.stopPropagation();
     }
+    // Add 'was-validated' class to the form to show validation feedback
     addUserRef.current.classList.add("was-validated");
+
+    // If the form is valid, proceed with user details submission
     if (addUserRef.current.checkValidity()) {
+      // Send user details to the server using an HTTP POST request
       axios.post("http://localhost:3000/usersDetails", state);
 
       event.preventDefault();
+      // Reset form state to initial values
       dispatch({ type: "init" });
-
+      // Display success toast message
       toast.success("User successfully added");
+
+      // Update user added flag in the context
       contextData.setIsUserAdded(true);
+      // Set loading state to false to stop form re-validation
       contextData.setLoadingData(false);
 
+      // Set a timeout to reset the loading state and user added flag
       setTimeout(() => {
+        // Set loading state to true to indicate data retrieval
         contextData.setLoadingData(true);
         contextData.setIsUserAdded(false);
-      }, 500);
+      }, 500); // Wait for 500 milliseconds
     }
   }
+
+  //This function will get user details in form fields
   function handleGetUsers(event) {
     event.preventDefault();
 
+    // Update form state with creation date and time information
     dispatch({
       type: "creationDate",
       payLoad: {
@@ -108,69 +145,89 @@ function UserForm({ formMode, userData, editUserID, modalCloseBtn }) {
       },
     });
 
+    // Update form state with user data
     dispatch({ type: "updateUser", payLoad: userData });
   }
-  const handleCloseModal = (event) => {
+  // Function to handle closing the modal
+  const handleCloseModal = () => {
+    // Trigger a click event on the close button ref
     closeBTn.current.click();
   };
 
+  // Function to handle updating user details
   const updateUserDetails = (event) => {
+    // Go back to the previous page in the navigation history
     navigate(-1);
+
+    // Prevent form submission if there are any invalid fields
     if (!addUserRef.current.checkValidity()) {
       toast.error("Please fill out all required fields");
       event.preventDefault();
       event.stopPropagation();
     }
+    // Add 'was-validated' class to the form to show validation feedback
     addUserRef.current.classList.add("was-validated");
+
+    // If the form is valid, proceed with user details update
     if (addUserRef.current.checkValidity()) {
       event.preventDefault();
+      // Send user details update request to the server using an HTTP PUT request
       axios
         .put(`http://localhost:3000/usersDetails/${editUserID}`, state)
         .then((response) => {
-         
+          // Check if the update request was successful
           if (response.status === 200) {
-            
+            // Reset form state to initial values
             dispatch({ type: "init" });
 
+            // Display success toast message
             toast.info("User successfully Updated");
+
+            // Update user added state in the context
             contextData.setIsUserAdded(true);
+            // Set loading state to false to stop form re-validation
             contextData.setLoadingData(false);
 
+            // If a close button is available, close the modal
             if (closeBTn) {
               handleCloseModal();
             }
 
+            // Set a timeout to reset the loading state and user added state
             setTimeout(() => {
+              // Set loading state to true to indicate data retrieval
               contextData.setLoadingData(true);
               contextData.setIsUserAdded(false);
             }, 500);
           }
         })
         .catch(function (error) {
-          alert(error.message)
-      
-          toast.error(error.message)
+          // Alert and log the error message
+          alert(error.message);
+          toast.error(error.message);
           console.log(error.toJSON());
-
         });
     }
   };
 
   return (
     <div>
+      {/* Form for adding or editing user details */}
       <form
         className="row g-3 needs-validation p-4"
         noValidate
-        onSubmit={formMode == "add" ? addUserDetails : updateUserDetails}
+        onSubmit={formMode == "add" ? addUserDetails : updateUserDetails} // Submit handler based on form mode
+        // Form ref for validation and accessing form elements
         ref={addUserRef}
       >
+        {/* Close button to dismiss the modal */}
         <button
           type="button"
           className="btn-close"
           data-bs-dismiss="modal"
-          data-bs-target={`#userID_${editUserID}`}
+          data-bs-target={`#userID_${editUserID}`} // Target specific modal based on editUserID
           aria-label="Close"
-          ref={closeBTn}
+          ref={closeBTn} // Button ref for triggering click
           hidden
         ></button>
         <div className="b-0 m-0 p-0 col-sm-9 align-items-center  text-middle d-flex">
@@ -179,20 +236,22 @@ function UserForm({ formMode, userData, editUserID, modalCloseBtn }) {
               hidden={true}
               ref={handleUpdateButton}
               className="btn btn-info text-black"
-              onClick={handleGetUsers}
+              onClick={handleGetUsers} // Handler to fetch user details
             >
               GetUser Details
             </button>
           ) : (
-            ""
+            "" // Empty element if adding new user
           )}
+          {/* Input group for displaying user ID */}
           <div className="input-group mb-3 w-25 justify-content-center ">
             <span className="input-group-text">User ID</span>
             <input
               name="userID"
               defaultValue={
+                // Set default user ID based on form mode
                 formMode == "add"
-                  ? contextData.data[contextData.data.length - 1].id + 1
+                  ? contextData.data[contextData.data.length - 1].id + 1 // Next ID based on existing data
                   : state.id
               }
               type="text"
@@ -204,6 +263,7 @@ function UserForm({ formMode, userData, editUserID, modalCloseBtn }) {
           </div>
         </div>
 
+        {/* Section for displaying user creation date and time */}
         <div className="b-0 m-0 p-0 col-sm-3 justify-content-center align-items-end d-flex flex-column">
           <div>
             <small htmlFor="firstname" className="form-label ">
@@ -217,18 +277,19 @@ function UserForm({ formMode, userData, editUserID, modalCloseBtn }) {
           </small>
         </div>
 
+        {/* Input fields for user details */}
         <div className="col-md-4">
           <label htmlFor="firstname" className="form-label">
             First name
           </label>
           <input
-            onChange={handleInputChange}
+            onChange={handleInputChange} // Handler for input change
             name="first_name"
             type="text"
             className="form-control ps-1"
             id="firstname"
             required
-            defaultValue={state.first_name}
+            defaultValue={state.first_name} // Set default value from form state
           />
           <div className="valid-feedback">Looks good!</div>
           <div className="invalid-feedback">Please enter your Firstname.</div>
@@ -243,8 +304,8 @@ function UserForm({ formMode, userData, editUserID, modalCloseBtn }) {
             className="form-control ps-1"
             id="lastname"
             required
-            onChange={handleInputChange}
-            defaultValue={state.last_name}
+            onChange={handleInputChange} // Handler for input change
+            defaultValue={state.last_name} // Set default value from form state
           />
           <div className="valid-feedback">Looks good!</div>
           <div className="invalid-feedback">Please enter your Lastname.</div>
@@ -255,14 +316,14 @@ function UserForm({ formMode, userData, editUserID, modalCloseBtn }) {
           </label>
           <div className="input-group has-validation">
             <input
-              onChange={handleInputChange}
+              onChange={handleInputChange} // Handler for input change
               name="email"
               type="email"
               className="form-control ps-1"
               id="email"
               aria-describedby="inputGroupPrepend"
               required
-              defaultValue={state.email}
+              defaultValue={state.email} // Set default value from form state
             />
             <div className="invalid-feedback">Please enter your e-mail.</div>
           </div>
@@ -274,8 +335,8 @@ function UserForm({ formMode, userData, editUserID, modalCloseBtn }) {
           </label>
           <div className="input-group has-validation">
             <input
-              defaultValue={state.qualification}
-              onChange={handleInputChange}
+              defaultValue={state.qualification} // Set default value from form state
+              onChange={handleInputChange} // Handler for input change
               name="qualification"
               type="text"
               className="form-control ps-1"
@@ -288,23 +349,25 @@ function UserForm({ formMode, userData, editUserID, modalCloseBtn }) {
             </div>
           </div>
         </div>
-
+        {/* Date of Birth */}
         <div className="col-md-4">
           <label htmlFor="dob" className="form-label">
             Date of Birth
           </label>
           <div className="input-group has-validation">
+            {/* Input field for date of birth */}
             <input
-              defaultValue={state.dob}
-              format="yyyy-mm-dd"
-              data-date=""
-              data-date-format="DD MMMM YYYY"
+              defaultValue={state.dob} // Set the default value to the dob stored in state
+              format="yyyy-mm-dd" // Specify the date format
+              data-date="" // Placeholder for datepicker
+              data-date-format="DD MMMM YYYY" // Format for displaying the date
               onChange={(event) => {
+                // Handle change event for the date input field
                 dispatch({
-                  type: "dob",
+                  type: "dob", // Action type for updating dob
                   payLoad: {
-                    name: event.target.name,
-                    value: event.target.value,
+                    name: event.target.name, // Name of the input field
+                    value: event.target.value, // Value entered by the user
                   },
                 });
               }}
@@ -315,19 +378,21 @@ function UserForm({ formMode, userData, editUserID, modalCloseBtn }) {
               aria-describedby="inputGroupPrepend"
               required
             />
+            {/* Validation message for date of birth */}
             <div className="invalid-feedback">
               Please select your date of birth.
             </div>
           </div>
         </div>
 
+        {/* Mobile Number */}
         <div className="col-md-4">
           <label htmlFor="mobile" className="form-label">
             Mobile Number
           </label>
           <div className="input-group has-validation">
             <input
-              defaultValue={state.phone}
+              defaultValue={state.phone} // Set the default value to the phone number stored in state
               onChange={handleInputChange}
               name="phone"
               type="number"
@@ -335,8 +400,6 @@ function UserForm({ formMode, userData, editUserID, modalCloseBtn }) {
               id="mobile"
               aria-describedby="inputGroupPrepend"
               required
-              minLength={10}
-              pattern="\d{9,10}"
             />
             <div className="invalid-feedback">
               Please enter valid mobile number.
@@ -344,6 +407,7 @@ function UserForm({ formMode, userData, editUserID, modalCloseBtn }) {
           </div>
         </div>
 
+        {/* City */}
         <div className="col-md-4">
           <label htmlFor="city" className="form-label">
             City
@@ -359,7 +423,7 @@ function UserForm({ formMode, userData, editUserID, modalCloseBtn }) {
           />
           <div className="invalid-feedback">Please provide a valid city.</div>
         </div>
-
+        {/* State */}
         <div className="col-md-4">
           <label htmlFor="state" className="form-label">
             State
@@ -404,6 +468,7 @@ function UserForm({ formMode, userData, editUserID, modalCloseBtn }) {
           </select>
           <div className="invalid-feedback">Please select a valid state.</div>
         </div>
+        {/* Pincode */}
         <div className="col-md-4 ">
           <label htmlFor="pincode" className="form-label">
             Pincode
@@ -421,6 +486,8 @@ function UserForm({ formMode, userData, editUserID, modalCloseBtn }) {
             Please provide a valid pincode.
           </div>
         </div>
+
+        {/* Address */}
         <div className="col-md-12">
           <div className="input-group has-validation">
             <span className="input-group-text">Address</span>
@@ -439,6 +506,7 @@ function UserForm({ formMode, userData, editUserID, modalCloseBtn }) {
         </div>
         <div className="borderDesign"></div>
 
+        {/* Gender Radio inputs */}
         <div className="col-6 row justify-content-evenly">
           <div className="col-md-6 mb-2  justify-content-md-center d-flex align-items-center">
             <div className=" has-validation ">
@@ -494,6 +562,7 @@ function UserForm({ formMode, userData, editUserID, modalCloseBtn }) {
             </div>
           </div>
 
+          {/* User Type Radio inputs */}
           <div className="col-md-6 d-flex justify-content-md-center align-items-center">
             <div>
               <label className="form-label" htmlFor="admin">
@@ -534,6 +603,7 @@ function UserForm({ formMode, userData, editUserID, modalCloseBtn }) {
           </div>
         </div>
 
+        {/* User Status checkbox input */}
         <div className="col-6 row justify-content-evenly">
           <div className="col-md-6  d-flex justify-content-center align-items-center">
             <div className="form-check form-switch p-0 w-100 align-items-center justify-content-center d-flex">
@@ -566,11 +636,14 @@ function UserForm({ formMode, userData, editUserID, modalCloseBtn }) {
           </div>
 
           <div className="col-md-6  justify-content-center d-flex align-items-center">
+            {/* This is a conditional rendering that shows a different button based on the form mode */}
             {formMode == "add" ? (
+              // This button is displayed when the form is in add mode
               <button className="btn btn-primary submitBtn" type="submit">
                 Add User
               </button>
             ) : (
+              // This button is displayed when the form is in update mode
               <button className="btn btn-success submitBtn" type="submit">
                 Update User
               </button>

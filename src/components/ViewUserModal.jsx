@@ -1,27 +1,23 @@
+// Import React and useRef hook
 import React, { useRef } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
+// Import useNavigate hook for routing
+import { useNavigate } from "react-router-dom";
 
+// Define ViewUserModal component with eachData prop
 function ViewUserModal({ eachData }) {
+  // Get access to useNavigate hook
   const navigate = useNavigate();
+  // Create useRef hook for view model close button
   const viewModelColoseBtnRef = useRef(null);
 
-  let modalElements = document.querySelectorAll(".modal");
-
-  /*  modalElements.forEach((el)=>{
-    if(!el.classList.contains('show')){
-        navigate(-1)
-    }
-  }) */
-
+  //handle view modal close
   const handleViewModelClose = () => {
-    navigate(-1);
+    navigate(-1); // Go back to the previous page using useNavigate hook
   };
   return (
     <div>
       <div>
         {/* Create a button to trigger the modal */}
-
-        {/* Create a modal component with user details */}
         <div
           className="modal fade modal-lg"
           id={`userID_${eachData.id}`}
@@ -31,6 +27,7 @@ function ViewUserModal({ eachData }) {
           data-bs-backdrop="static"
           data-bs-keyboard="false"
         >
+          {/* Create a modal component with user details */}
           <div className="modal-dialog ">
             <div className="modal-content w-100 ">
               {/* Modal header with title */}

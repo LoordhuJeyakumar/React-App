@@ -1,16 +1,24 @@
+// Import React library and useLocation and useNavigate hooks from react-router-dom
 import React from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
+// Define DeleteUsersModal component with props: eachData, handleDeleteUser, and cancelBtnRef
 function DeleteUsersModal({ eachData, handleDeleteUser, cancelBtnRef }) {
+  // Get the current location and history and navigate function from React Router
   const location = useLocation();
   const navigate = useNavigate();
 
+  // Define handleCancelDelete function to handle canceling the delete modal
   const handleCancelDelete = () => {
+    // Check if the location object has a state property
     if (location.state === null) {
-      navigate(-1);
+      navigate(-1); // If no state property, go back one page in the history
     } else {
+      // If there is a state property
+
+      // Check if the delete property in state is false
       if (!location.state.delete) {
-        navigate(-1);
+        navigate(-1); // If delete is false, go back one page in the history
       }
     }
   };
@@ -44,11 +52,13 @@ function DeleteUsersModal({ eachData, handleDeleteUser, cancelBtnRef }) {
               <h3>Are you Sure ?</h3>
               <h5>Do you want to delete</h5>
 
+              {/* Display the user's information */}
               <div
                 className="card d-flex flex-row"
                 style={{ background: "transparent" }}
               >
                 <div>
+                  {/* Display an avatar based on the user's gender */}
                   <lord-icon
                     src={
                       eachData.gender == "Female"
@@ -67,6 +77,7 @@ function DeleteUsersModal({ eachData, handleDeleteUser, cancelBtnRef }) {
                   <small>User ID : {eachData.id}</small>
                   <div className="card-text mt-3">
                     <p className="card-text">
+                      {/* Display the user's role */}
                       {eachData.admin ? (
                         <span>
                           Admin {"    "}
@@ -88,6 +99,7 @@ function DeleteUsersModal({ eachData, handleDeleteUser, cancelBtnRef }) {
                       )}
                     </p>
                     <p className="card-text">
+                      {/* Display the user's status */}
                       {eachData.userStatus ? (
                         <span>
                           Active {"    "}

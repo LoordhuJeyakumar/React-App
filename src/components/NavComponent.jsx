@@ -1,39 +1,16 @@
-import React, { useState } from "react";
-import Dashboard from "./Dashboard";
-import CreateUser from "./CreateUser";
-import AllUsers from "./AllUsers";
-import DeleteUsers from "./DeleteUsers";
-import EditUsers from "./EditUsers";
-import { ToastContainer } from "react-toastify";
-import { NavLink } from "react-router-dom";
-import "jquery/dist/jquery.min.js";
-import "bootstrap/dist/js/bootstrap.min.js";
-import "bootstrap/js/dist/collapse";
+import React, { useState } from "react"; // Imports React and useState hook
+import { ToastContainer } from "react-toastify"; // Imports ToastContainer for displaying notifications
+import { NavLink } from "react-router-dom"; // Imports NavLink for creating navigation links
 
-function NavComponent({ homePageComponent, setHomePageComponent }) {
+function NavComponent() {
+  // useState hook to manage the collapsed state of the navbar
   const [isNavCollapsed, setIsNavCollapsed] = useState(true);
-  /*  const handleNavButton = (event) => {
-    event.preventDefault();
-    let navLink = document.querySelectorAll(".nav-link");
-    navLink.forEach((el) => el.classList.remove("active"));
-    let pageName = event.target.textContent;
 
-    if (pageName === "Dashboard") {
-      setHomePageComponent(<Dashboard />);
-    } else if (pageName === "Create User") {
-      setHomePageComponent(<CreateUser />);
-    } else if (pageName === "All Users") {
-      setHomePageComponent(<AllUsers />);
-    } else if (pageName === "Edit Users") {
-      setHomePageComponent(<EditUsers />);
-    } else if (pageName === "Delete Users") {
-      setHomePageComponent(<DeleteUsers />);
-    }
-    event.target.classList.add("active");
-  }; */
   return (
     <div className="container d-flex justify-content-center mt-4 sticky-top ">
-      <ToastContainer theme="colored" position="bottom-right" />
+      {/* Displays toast notifications */}
+      <ToastContainer theme="colored" position="top-left" />
+
       <nav className="navbar navbar-expand-lg rounded-pill shadow justify-content-center d-flex ">
         <div className="w-75">
           <a href="/" className="text-decoration-none">
@@ -42,12 +19,7 @@ function NavComponent({ homePageComponent, setHomePageComponent }) {
             </h2>
           </a>
         </div>
-        {/*  <input
-          className="form-control w-50"
-          list="datalistOptions"
-          id="exampleDataList"
-          placeholder="Type to search..."
-        ></input> */}
+        {/* Navbar toggler button for collapsing/expanding the navigation links */}
         <div className="container-fluid justify-content-center rounded-pill ">
           <button
             className="navbar-toggler mb-3"
@@ -59,56 +31,42 @@ function NavComponent({ homePageComponent, setHomePageComponent }) {
             <i className="fa-solid fa-bars"> </i>{" "}
             <span className="text-decoration-none">Menu</span>
           </button>
+          {/* Navigation links container, conditionally collapsed based on isNavCollapsed state */}
           <div
             className={`${isNavCollapsed ? "collapse" : ""} navbar-collapse`}
             id="navbarText"
           >
+            {/* Unordered list containing navigation links */}
             <ul className="navbar-nav me-auto mb-2 mb-lg-0 d-flex justify-content-md-evenly  w-100 ">
+              {/* Navigation link to the dashboard page */}
               <li className="nav-item ">
                 <NavLink to="/" className="nav-link  btn">
                   Dashboard
                 </NavLink>
-                {/*  <a className="nav-link active btn" aria-current="page">
-                  Dashboard
-                </a> */}
               </li>
-
+              {/* Navigation link to the create-users page */}
               <li className="nav-item ">
                 <NavLink to="create-users" className="nav-link btn">
-                  Craete User
-                </NavLink>
-                {/*  <a className="nav-link btn" onClick={handleNavButton}>
                   Create User
-                </a> */}
+                </NavLink>
               </li>
+              {/* Navigation link to the all-users page */}
               <li className="nav-item">
                 <NavLink to="all-users" className="nav-link btn">
                   All Users
                 </NavLink>
-                {/* <a
-                  className="nav-link "
-                  onClick={handleNavButton}
-                  role="button"
-                  aria-expanded="false"
-                >
-                  All Users
-                </a> */}
               </li>
+              {/* Navigation link to the edit-users page */}
               <li className="nav-item ">
                 <NavLink to="edit-users" className="nav-link btn">
                   Edit Users
                 </NavLink>
-                {/* <a className="nav-link btn" onClick={handleNavButton}>
-                  Edit Users
-                </a> */}
               </li>
+              {/* Navigation link to the delete-users page */}
               <li className="nav-item ">
                 <NavLink to="delete-users" className="nav-link btn">
                   Delete Users
                 </NavLink>
-                {/* <a className="nav-link btn" onClick={handleNavButton}>
-                  Delete Users
-                </a> */}
               </li>
             </ul>
           </div>

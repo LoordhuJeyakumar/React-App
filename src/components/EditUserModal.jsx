@@ -1,52 +1,33 @@
-import React, { useContext, useReducer, useRef, useState } from "react";
+// Import React and useRef hook
+import React, { useRef } from "react";
+// Import UserForm component
 import UserForm from "./UserForm";
-import { initialState, reducer } from "../reducers/FormReducer";
-import { DataContext } from "../App";
+// Import useNavigate hook
 import { useNavigate } from "react-router-dom";
 
+// Define EditUserModal function with eachData and editUserID props
 function EditUserModal({ eachData, editUserID }) {
-  // Destructure the useReducer hook to access the  dispatch function
-  const [, dispatch] = useReducer(reducer, initialState);
+  // Create navigate constant using useNavigate hook
   const navigate = useNavigate();
-  // Create a local state variable to store user data
-  const [userData, SetUserData] = useState(eachData);
-
-  const contextData = useContext(DataContext);
-
-  // Create a local state variable to store the ID of the user being edited
-  /*   const [editUserID, setEditUserID] = useState(null); */
-
-  // Create a useRef hook to reference the modal close button and cancel button
+  // Create modalCloseBtn ref
   const modalCloseBtn = useRef(null);
 
-  // Define a function to get user details and update the state accordingly
-  const getUserDetails = () => {
-    // Update the userData state with the current data
-    SetUserData(eachData);
-
-    // Update the editUserID state with the ID of the user being edited
-    setEditUserID(eachData.id);
-
-    // Dispatch an action to update the userData in the reducer
-    dispatch({
-      type: "updateUser",
-      payLoad: { value: userData },
-    });
-  };
-
+  // Define handleCloseModal function
   const handleCloseModal = () => {
+    // Navigate back to the previous page
     navigate(-1);
   };
   return (
     <>
+      {/* The modal container */}
       <div
         className="modal fade modal-xl"
         id={`userID_${eachData.id}`}
         tabIndex="-1"
         aria-labelledby="exampleModalLabel"
         aria-hidden="true"
-        data-bs-backdrop="static"
-        data-bs-keyboard="false"
+        data-bs-backdrop="static" // Sets the backdrop to prevent clicking outside the modal from closing it
+        data-bs-keyboard="false" // Disables keyboard navigation for closing the modal
       >
         <div className="modal-dialog ">
           <div className="modal-content w-100">
@@ -56,6 +37,7 @@ function EditUserModal({ eachData, editUserID }) {
                   Users Details
                 </h1>
               </div>
+              {/* The modal close button */}
               <div data-bs-theme="dark">
                 <button
                   type="button"
@@ -66,12 +48,13 @@ function EditUserModal({ eachData, editUserID }) {
                 ></button>
               </div>
             </div>
+            {/* The modal body */}
             <div className="d-flex dataModelBox">
+              {/* The UserForm component for editing the user data */}
               <UserForm
                 modalCloseBtn={modalCloseBtn}
                 formMode={"edit"}
-                userData={userData}
-                /* setEditUserID={setEditUserID} */
+                userData={eachData}
                 editUserID={editUserID}
               />
             </div>
