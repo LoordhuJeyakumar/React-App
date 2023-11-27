@@ -82,7 +82,7 @@ function DeleteUsersModal({ eachData, handleDeleteUser, cancelBtnRef }) {
                         <span>
                           Admin {"    "}
                           <img
-                            src="../../src/assets/protection.png"
+                            src="../../public/protection.png"
                             alt="Admin User"
                             style={{ width: "25px" }}
                           />
@@ -91,7 +91,7 @@ function DeleteUsersModal({ eachData, handleDeleteUser, cancelBtnRef }) {
                         <span>
                           User {"    "}
                           <img
-                            src="../../src/assets/user.png"
+                            src="../../public/user.png"
                             style={{ width: "25px" }}
                             alt="Normal User"
                           />
@@ -104,7 +104,7 @@ function DeleteUsersModal({ eachData, handleDeleteUser, cancelBtnRef }) {
                         <span>
                           Active {"    "}
                           <img
-                            src="../../src/assets/check.png"
+                            src="../../public/check.png"
                             alt="Active"
                             style={{ width: "25px" }}
                           />
@@ -113,7 +113,7 @@ function DeleteUsersModal({ eachData, handleDeleteUser, cancelBtnRef }) {
                         <span>
                           In-Active {"    "}
                           <img
-                            src="../../src/assets/multiply.png"
+                            src="../../public/multiply.png"
                             style={{ width: "25px" }}
                             alt="In-Active"
                           />

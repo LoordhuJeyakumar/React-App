@@ -125,7 +125,7 @@ function UserForm({ formMode, userData, editUserID }) {
       // Set a timeout to reset the loading state and user added flag
       setTimeout(() => {
         // Set loading state to true to indicate data retrieval
-        contextData.setLoadingData(true);
+        contextData.setLoadingData(false);
         contextData.setIsUserAdded(false);
       }, 500); // Wait for 500 milliseconds
     }

@@ -25,25 +25,22 @@ function App() {
   // Initializes the 'isUserAdded' state with a false value
   const [isUserAdded, setIsUserAdded] = useState(false);
 
-  // useEffect hook to fetch user details from JSON Server
-  useEffect(() => {
-    // Checks if data is not already loading
-    if (!loadingData) {
-      // Uses axios to make a GET request to the 'http://localhost:3000/usersDetails' endpoint
-      axios
-        .get("https://usermanagement-api.onrender.com/usersDetails/")
-        .then((response) => {
-          // Sets the 'data' state with the response data
-          setData(response.data);
-          // Sets the 'loadingData' state to true to indicate data is loaded
-          setLoadingData(true);
-        })
-        .catch((error) => {
-          //If api request fail Logs the error to the console
-          console.error(error);
-        });
-    }
-  }, [isUserAdded]); //This dependency array ensures the useEffect hook is only called when the 'isUserAdded' state changes
+  // Checks if data is not already loading
+  if (!loadingData) {
+    // Uses axios to make a GET request to the 'http://localhost:3000/usersDetails' endpoint
+    axios
+      .get("https://usermanagement-api.onrender.com/usersDetails/")
+      .then((response) => {
+        // Sets the 'data' state with the response data
+        setData(response.data);
+        // Sets the 'loadingData' state to true to indicate data is loaded
+        setLoadingData(true);
+      })
+      .catch((error) => {
+        //If api request fail Logs the error to the console
+        console.error(error);
+      });
+  }
 
   return (
     <div>
