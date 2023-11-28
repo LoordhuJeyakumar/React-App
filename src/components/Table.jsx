@@ -44,7 +44,7 @@ function Table({ pageData, actionBtnType }) {
                     <>
                       Admin{" "}
                       <img
-                        src="/public/protection.png"
+                        src="protection.png"
                         alt="admin"
                         style={{ width: 15 }}
                       />
@@ -53,7 +53,7 @@ function Table({ pageData, actionBtnType }) {
                     <>
                       User{" "}
                       <img
-                        src="/public/user.png"
+                        src="user.png"
                         alt="user"
                         style={{ width: 15 }}
                       />
