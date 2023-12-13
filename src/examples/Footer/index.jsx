@@ -1,52 +1,16 @@
-/**
-=========================================================
-* Soft UI Dashboard React - v4.0.1
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/soft-ui-dashboard-react
-* Copyright 2023 Creative Tim (https://www.creative-tim.com)
-
-Coded by www.creative-tim.com
-
- =========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-*/
-
-// prop-types is a library for typechecking of props
-import PropTypes from "prop-types";
 
 // @mui material components
 import Link from "@mui/material/Link";
 import Icon from "@mui/material/Icon";
-import typography from "../../assets/theme/base/typography";
-import SoftBox from "../../components/SoftBox";
 import SoftTypography from "../../components/SoftTypography";
+import GitHubIcon from "@mui/icons-material/GitHub";
+import { Box } from "@mui/material";
+import pxToRem from "../../assets/theme/functions/pxToRem";
 
-// Soft UI Dashboard React components
-/* import SoftBox from "components/SoftBox";
-import SoftTypography from "components/SoftTypography"; */
 
-// Soft UI Dashboard React base styles
-/* import typography from "assets/theme/base/typography"; */
-
-function Footer({ company, links }) {
-  const { href, name } = company;
-  const { size } = typography;
-
-  const renderLinks = () =>
-    links.map((link) => (
-      <SoftBox key={link.name} component="li" px={2} lineHeight={1}>
-        <Link href={link.href} target="_blank">
-          <SoftTypography variant="button" fontWeight="regular" color="text">
-            {link.name}
-          </SoftTypography>
-        </Link>
-      </SoftBox>
-    ));
-
+function Footer() {
   return (
-    <SoftBox
+    <Box
       width="100%"
       display="flex"
       flexDirection={{ xs: "column", lg: "row" }}
@@ -54,30 +18,29 @@ function Footer({ company, links }) {
       alignItems="center"
       px={1.5}
     >
-      <SoftBox
+      <Box
         display="flex"
         justifyContent="center"
         alignItems="center"
         flexWrap="wrap"
         color="text"
-        fontSize={size.sm}
+        fontSize={pxToRem(14)}
         px={1.5}
       >
         &copy; {new Date().getFullYear()}, made with
-        <SoftBox fontSize={size.md} color="text" mb={-0.5} mx={0.25}>
+        <Box fontSize={pxToRem(16)} color="text" mb={-0.5} mx={0.25}>
           <Icon color="inherit" fontSize="inherit">
             favorite
           </Icon>
-        </SoftBox>
+        </Box>
         by
-        <Link href={href} target="_blank">
+        <Link href={"https://github.com/LoordhuJeyakumar"} target="_blank">
           <SoftTypography variant="button" fontWeight="medium">
-            &nbsp;{name}&nbsp;
+            &nbsp;Loordhu Jeyakumar&nbsp;
           </SoftTypography>
         </Link>
-        for a better web.
-      </SoftBox>
-      <SoftBox
+      </Box>
+      <Box
         component="ul"
         sx={({ breakpoints }) => ({
           display: "flex",
@@ -94,27 +57,15 @@ function Footer({ company, links }) {
           },
         })}
       >
-        {renderLinks()}
-      </SoftBox>
-    </SoftBox>
+        <Box component="li" px={2} lineHeight={1}>
+          <Link href="https://github.com/LoordhuJeyakumar" target="_blank">
+            <SoftTypography variant="button" fontWeight="regular" color="text">
+              <GitHubIcon /> Git Source Code
+            </SoftTypography>
+          </Link>
+        </Box>
+      </Box>
+    </Box>
   );
 }
-
-// Setting default values for the props of Footer
-Footer.defaultProps = {
-  company: { href: "https://www.creative-tim.com/", name: "Creative Tim" },
-  links: [
-    { href: "https://www.creative-tim.com/", name: "Creative Tim" },
-    { href: "https://www.creative-tim.com/presentation", name: "About Us" },
-    { href: "https://www.creative-tim.com/blog", name: "Blog" },
-    { href: "https://www.creative-tim.com/license", name: "License" },
-  ],
-};
-
-// Typechecking props for the Footer
-Footer.propTypes = {
-  company: PropTypes.objectOf(PropTypes.string),
-  links: PropTypes.arrayOf(PropTypes.object),
-};
-
 export default Footer;

@@ -561,7 +561,7 @@ const teacherData = [
     isOnline: true,
   },
 ];
-
+const apiURL = `https://students-teachers-be.onrender.com/`;
 const teacherDataContext = createContext(teacherData);
 
 export { teacherDataContext as default, teacherData };

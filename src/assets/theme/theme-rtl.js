@@ -39,12 +39,12 @@ import listItemText from "../../assets/theme/components/list/listItemText";
 import card from "../../assets/theme/components/card";
 import cardMedia from "../../assets/theme/components/card/cardMedia";
 import cardContent from "../../assets/theme/components/card/cardContent";
-import button from "../../assets/theme/components/button";
+/* import button from "../../assets/theme/components/button"; */
 import iconButton from "../../assets/theme/components/iconButton";
-import inputBase from "../../assets/theme/components/form/inputBase";
+/* import inputBase from "../../assets/theme/components/form/inputBase"; */
 import menu from "../../assets/theme/components/menu";
 import menuItem from "../../assets/theme/components/menu/menuItem";
-import switchButton from "../../assets/theme/components/form/switchButton";
+/* import switchButton from "../../assets/theme/components/form/switchButton"; */
 import divider from "../../assets/theme/components/divider";
 import tableContainer from "../../assets/theme/components/table/tableContainer";
 import tableHead from "../../assets/theme/components/table/tableHead";
@@ -62,13 +62,13 @@ import step from "../../assets/theme/components/stepper/step";
 import stepConnector from "../../assets/theme/components/stepper/stepConnector";
 import stepLabel from "../../assets/theme/components/stepper/stepLabel";
 import stepIcon from "../../assets/theme/components/stepper/stepIcon";
-import select from "../../assets/theme/components/form/select";
+/* import select from "../../assets/theme/components/form/select";
 import formControlLabel from "../../assets/theme/components/form/formControlLabel";
 import formLabel from "../../assets/theme/components/form/formLabel";
 import checkbox from "../../assets/theme/components/form/checkbox";
 import radio from "../../assets/theme/components/form/radio";
 import autocomplete from "../../assets/theme/components/form/autocomplete";
-import input from "../../assets/theme/components/form/input";
+import input from "../../assets/theme/components/form/input"; */
 import container from "../../assets/theme/components/container";
 import popover from "../../assets/theme/components/popover";
 import buttonBase from "../../assets/theme/components/buttonBase";
@@ -105,12 +105,12 @@ export default createTheme({
     MuiCard: { ...card },
     MuiCardMedia: { ...cardMedia },
     MuiCardContent: { ...cardContent },
-    MuiButton: { ...button },
+    /* MuiButton: { ...button }, */
     MuiIconButton: { ...iconButton },
-    MuiInputBase: { ...inputBase },
+/*     MuiInputBase: { ...inputBase }, */
     MuiMenu: { ...menu },
     MuiMenuItem: { ...menuItem },
-    MuiSwitch: { ...switchButton },
+/*     MuiSwitch: { ...switchButton }, */
     MuiDivider: { ...divider },
     MuiTableContainer: { ...tableContainer },
     MuiTableHead: { ...tableHead },
@@ -128,7 +128,7 @@ export default createTheme({
     MuiStepConnector: { ...stepConnector },
     MuiStepLabel: { ...stepLabel },
     MuiStepIcon: { ...stepIcon },
-    MuiSelect: { ...select },
+    /* MuiSelect: { ...select },
     MuiFormControlLabel: { ...formControlLabel },
     MuiFormLabel: { ...formLabel },
     MuiCheckbox: { ...checkbox },
@@ -136,7 +136,7 @@ export default createTheme({
     MuiAutocomplete: { ...autocomplete },
     MuiInput: { ...input },
     MuiOutlinedInput: { ...input },
-    MuiFilledInput: { ...input },
+    MuiFilledInput: { ...input }, */
     MuiPopover: { ...popover },
     MuiButtonBase: { ...buttonBase },
     MuiIcon: { ...icon },

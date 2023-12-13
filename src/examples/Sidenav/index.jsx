@@ -51,6 +51,7 @@ import { setMiniSidenav, useSoftUIController } from "../../context";
 import SoftBox from "../../components/SoftBox";
 import sidenavLogoLabel from "./styles/sidenav";
 import SoftTypography from "../../components/SoftTypography";
+import { Box } from "@mui/material";
 
 function Sidenav({ color, brand, brandName, routes, ...rest }) {
   const [controller, dispatch] = useSoftUIController();
@@ -158,24 +159,23 @@ function Sidenav({ color, brand, brandName, routes, ...rest }) {
             <Icon sx={{ fontWeight: "bold" }}>close</Icon>
           </SoftTypography>
         </SoftBox>
-        <SoftBox component={NavLink} to="/" display="flex" alignItems="center">
-          {brand && (
-            <SoftBox
-              component="img"
-              src={brand}
-              alt="Soft UI Logo"
-              width="2rem"
-            />
-          )}
-          <SoftBox
-            width={!brandName && "100%"}
-            sx={(theme) => sidenavLogoLabel(theme, { miniSidenav })}
-          >
+        <Box component={NavLink} to="/" display="flex" flexDirection={'column'}  alignItems="center">
+         
+            <Box>
+              <lord-icon
+                src="https://cdn.lordicon.com/hungkruo.json"
+                trigger="loop"
+                state="loop-cycle"
+                style={{ width: "100px", height: "100px" }}
+              ></lord-icon>
+            </Box>
+          
+          
             <SoftTypography component="h6" variant="button" fontWeight="medium">
               {brandName}
             </SoftTypography>
-          </SoftBox>
-        </SoftBox>
+        
+        </Box>
       </SoftBox>
       <Divider />
       <List>{renderRoutes}</List>

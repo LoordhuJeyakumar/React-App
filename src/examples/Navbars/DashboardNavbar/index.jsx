@@ -161,6 +161,7 @@ function DashboardNavbar({ absolute, light, isMini }) {
       color="inherit"
       sx={(theme) => navbar(theme, { transparentNavbar, absolute, light })}
     >
+      
       <Toolbar sx={(theme) => navbarContainer(theme)}>
         <SoftBox
           color="inherit"

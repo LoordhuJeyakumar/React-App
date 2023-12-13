@@ -40,7 +40,6 @@ import Dashboard from "./layouts/dashboard";
 import Tables from "./layouts/tables";
 import Billing from "./layouts/billing";
 
-
 // Soft UI Dashboard React icons
 /* import Shop from "examples/Icons/Shop";
 import Office from "examples/Icons/Office";
@@ -55,7 +54,12 @@ import HomeIcon from "@mui/icons-material/Home";
 import PersonIcon from "@mui/icons-material/Person";
 import BoyIcon from "@mui/icons-material/Boy";
 import Teachers from "./layouts/Teachers/Teachers";
-import SpaceShip from "./examples/Icons/SpaceShip.jsX";
+import PersonAddAltIcon from "@mui/icons-material/PersonAddAlt";
+import PersonAddIcon from "@mui/icons-material/PersonAdd";
+import StudentForm from "./layouts/Admission/StudentForm";
+import Students from "./layouts/Students/Students";
+import TeacherForm from "./layouts/Admission/TeacherForm";
+import ViewStudentDetails from "./layouts/Students/ViewStudentDetails";
 
 const routes = [
   {
@@ -67,35 +71,53 @@ const routes = [
     component: <Dashboard />,
     noCollapse: true,
   },
-  {
-    type: "collapse",
-    name: "Teachers",
-    key: "tables",
-    route: "/tables",
-    icon: <PersonIcon size="12px" />,
-    component: <Tables />,
-    noCollapse: true,
-  },
+  { type: "title", title: "Student Pages", key: "student-pages" },
   {
     type: "collapse",
     name: "Students",
-    key: "billing",
-    route: "/billing",
+    key: "students",
+    route: "/students",
     icon: <BoyIcon size="12px" />,
-    component: <Billing />,
+    component: <Students />,
+    noCollapse: true,
+  },
+  {
+    type: "collapse",
+    name: "Add Students",
+    key: "create-Students",
+    route: "/create-Students",
+    icon: <PersonAddAltIcon size="12px" />,
+    component: <StudentForm mode={'add'}/>,
     noCollapse: true,
   },
 
-  { type: "title", title: "Account Pages", key: "account-pages" },
-
+  { type: "title", title: "Teachers Pages", key: "teachers-pages" },
 
   {
     type: "collapse",
     name: "Teachers",
-    key: "sign-up",
+    key: "teachers",
     route: "/teachers",
-    icon: <SpaceShip size="12px" />,
+    icon: <PersonIcon size="12px" />,
     component: <Teachers />,
+    noCollapse: true,
+  },
+  {
+    type: "collapse",
+    name: "Add Teacher",
+    key: "create-Teacher",
+    route: "/create-Teacher",
+    icon: <PersonAddIcon size="12px" />,
+    component: <TeacherForm />,
+    noCollapse: true,
+  },
+  {
+    type: "collapse",
+    name: "Add Teacher",
+    key: "profile",
+    route: "/profile",
+    icon: <PersonAddIcon size="12px" />,
+    component: <ViewStudentDetails />,
     noCollapse: true,
   },
 ];

@@ -1,16 +1,16 @@
 /* import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar"; */
 import React from "react";
-import TableComponent from "./TableComponent";
 import DashboardLayout from "../../examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "../../examples/Navbars/DashboardNavbar";
+import TeachersTable from "./TeachersTable";
 
 function Teachers() {
   return (
     <div>
       <DashboardLayout>
-        <DashboardNavbar/>
-        <TableComponent/>
+        <DashboardNavbar />
+        <TeachersTable />
       </DashboardLayout>
     </div>
   );
