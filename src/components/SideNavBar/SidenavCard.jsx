@@ -1,4 +1,3 @@
-
 // @mui material components
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
@@ -11,12 +10,15 @@ import BoxComponent from "../BoxComponent/BoxComponent";
 import UITypography from "../UITypography/UITypography";
 
 // Custom styles for the SidenavCard
-import { card, cardContent, cardIconBox, cardIcon } from "examples/Sidenav/styles/sidenavCard";
+import {
+  card,
+  cardContent,
+  cardIconBox,
+  cardIcon,
+} from "examples/Sidenav/styles/sidenavCard";
 
 // Soft UI Dashboard React context
 import { useSoftUIController } from "context";
-
-
 
 function SidenavCard() {
   const [controller] = useSoftUIController();
@@ -34,7 +36,10 @@ function SidenavCard() {
           mb={2}
           sx={cardIconBox}
         >
-          <Icon fontSize="medium" sx={(theme) => cardIcon(theme, { sidenavColor })}>
+          <Icon
+            fontSize="medium"
+            sx={(theme) => cardIcon(theme, { sidenavColor })}
+          >
             star
           </Icon>
         </BoxComponent>
@@ -47,7 +52,7 @@ function SidenavCard() {
               Please check our docs
             </UITypography>
           </BoxComponent>
-          
+
           <UIButton
             component={Link}
             href="https://www.creative-tim.com/learning-lab/react/quick-start/soft-ui-dashboard/"

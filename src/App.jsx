@@ -5,7 +5,7 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import { ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 
-import Sidenav from "./examples/Sidenav";
+/* import Sidenav from "./examples/Sidenav"; */
 
 // Soft UI Dashboard React themes
 import theme from "./assets/theme";
@@ -15,6 +15,10 @@ import axios from "axios";
 import EditStudentDetails from "./layouts/Students/EditStudentDetails";
 import ViewStudentDetails from "./layouts/Students/ViewStudentDetails";
 import DeleteStudent from "./layouts/Students/DeleteStudent";
+import ViewTeacherDetails from "./layouts/Teachers/ViewTeacherDetails";
+import DeleteTeacher from "./layouts/Teachers/DeleteTeacher";
+import EditTeacherDetails from "./layouts/Teachers/EditTeacherDetails";
+import Sidenav from "./components/SideNavBar";
 const localHost = true;
 const apiURL = localHost
   ? `http://localhost:3000/`
@@ -30,7 +34,8 @@ function App() {
   // Initializes the 'isStudentAdded' state with a false value
   const [isStudentAdded, setIsStudentAdded] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
-  async function getStudentData() {
+
+  async function getStudentsData() {
     const URL = apiURL;
     try {
       setLoadingData(true);
@@ -44,7 +49,7 @@ function App() {
     const URL = apiURL;
     try {
       setLoadingData(true);
-      const response = await axios.get(`${URL}teacherDetails`);
+      const response = await axios.get(`${URL}teachersDetails`);
       setTeacherData(response.data);
     } catch (error) {
       console.error(error);
@@ -53,7 +58,8 @@ function App() {
 
   // Checks if data is not already loading
   if (!loadingData) {
-    getStudentData();
+    getStudentsData();
+    getTeachersData();
   }
 
   const getRoutes = (allRoutes) => {
@@ -87,6 +93,7 @@ function App() {
             brandName="Student & Teacher Management"
             routes={routes}
           />
+          
         </>
         <DataContext.Provider
           value={{
@@ -106,8 +113,14 @@ function App() {
               path="editStudent/:userId"
               element={<EditStudentDetails />}
             />
+             <Route
+              path="editTeacher/:userId"
+              element={<EditTeacherDetails/>}
+            />
             <Route path="students/:userId" element={<ViewStudentDetails />} />
-            <Route path="deletStudent/:userId" element={<DeleteStudent />} />
+            <Route path="teachers/:userId" element={<ViewTeacherDetails />} />
+            <Route path="deleteStudent/:userId" element={<DeleteStudent />} />
+            <Route path="deleteTeacher/:userId" element={<DeleteTeacher />} />
           </Routes>
         </DataContext.Provider>
       </ThemeProvider>

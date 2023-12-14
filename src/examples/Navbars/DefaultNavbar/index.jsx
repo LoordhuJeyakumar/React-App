@@ -41,7 +41,8 @@ function DefaultNavbar({ transparent, light, action }) {
   const [mobileNavbar, setMobileNavbar] = useState(false);
   const [mobileView, setMobileView] = useState(false);
 
-  const openMobileNavbar = ({ currentTarget }) => setMobileNavbar(currentTarget.parentNode);
+  const openMobileNavbar = ({ currentTarget }) =>
+    setMobileNavbar(currentTarget.parentNode);
   const closeMobileNavbar = () => setMobileNavbar(false);
 
   useEffect(() => {
@@ -73,7 +74,11 @@ function DefaultNavbar({ transparent, light, action }) {
     <Container>
       <SoftBox
         py={1.5}
-        px={{ xs: transparent ? 4 : 5, sm: transparent ? 2 : 5, lg: transparent ? 0 : 5 }}
+        px={{
+          xs: transparent ? 4 : 5,
+          sm: transparent ? 2 : 5,
+          lg: transparent ? 0 : 5,
+        }}
         my={2}
         mx={3}
         width="calc(100% - 48px)"
@@ -86,19 +91,48 @@ function DefaultNavbar({ transparent, light, action }) {
         position="absolute"
         left={0}
         zIndex={3}
-        sx={({ palette: { transparent: transparentColor, white }, functions: { rgba } }) => ({
-          backgroundColor: transparent ? transparentColor.main : rgba(white.main, 0.8),
+        sx={({
+          palette: { transparent: transparentColor, white },
+          functions: { rgba },
+        }) => ({
+          backgroundColor: transparent
+            ? transparentColor.main
+            : rgba(white.main, 0.8),
           backdropFilter: transparent ? "none" : `saturate(200%) blur(30px)`,
         })}
       >
-        <SoftBox component={Link} to="/" py={transparent ? 1.5 : 0.75} lineHeight={1}>
-          <SoftTypography variant="button" fontWeight="bold" color={light ? "white" : "dark"}>
+        <SoftBox
+          component={Link}
+          to="/"
+          py={transparent ? 1.5 : 0.75}
+          lineHeight={1}
+        >
+          <SoftTypography
+            variant="button"
+            fontWeight="bold"
+            color={light ? "white" : "dark"}
+          >
             Soft UI Dashboard
           </SoftTypography>
         </SoftBox>
-        <SoftBox color="inherit" display={{ xs: "none", lg: "flex" }} m={0} p={0}>
-          <DefaultNavbarLink icon="donut_large" name="dashboard" route="/dashboard" light={light} />
-          <DefaultNavbarLink icon="person" name="profile" route="/profile" light={light} />
+        <SoftBox
+          color="inherit"
+          display={{ xs: "none", lg: "flex" }}
+          m={0}
+          p={0}
+        >
+          <DefaultNavbarLink
+            icon="donut_large"
+            name="dashboard"
+            route="/dashboard"
+            light={light}
+          />
+          <DefaultNavbarLink
+            icon="person"
+            name="profile"
+            route="/profile"
+            light={light}
+          />
           <DefaultNavbarLink
             icon="account_circle"
             name="sign up"
@@ -154,7 +188,9 @@ function DefaultNavbar({ transparent, light, action }) {
           <Icon fontSize="default">{mobileNavbar ? "close" : "menu"}</Icon>
         </SoftBox>
       </SoftBox>
-      {mobileView && <DefaultNavbarMobile open={mobileNavbar} close={closeMobileNavbar} />}
+      {mobileView && (
+        <DefaultNavbarMobile open={mobileNavbar} close={closeMobileNavbar} />
+      )}
     </Container>
   );
 }

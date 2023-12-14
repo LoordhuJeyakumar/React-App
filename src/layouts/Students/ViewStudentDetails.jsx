@@ -1,5 +1,4 @@
 import React from "react";
-import Overview from "../profile";
 
 // @mui material components
 import Grid from "@mui/material/Grid";
@@ -42,7 +41,7 @@ function ViewStudentDetails() {
   const dataContext = useContext(DataContext);
   const params = useParams();
   const [student, setStudent] = useState(null);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   useEffect(() => {
     const viewStudent = dataContext.studentData.find((eachData) => {
@@ -148,21 +147,26 @@ function ViewStudentDetails() {
             </Card>
           </SoftBox>
           <Box justifyContent={"space-between"} m={2} display={"flex"}>
-            <SoftTypography textGradient color="primary" align="center" variant="h4">
+            <SoftTypography
+              textGradient
+              color="primary"
+              align="center"
+              variant="h4"
+            >
               Student Details
             </SoftTypography>
             <Button
               variant="contained"
               startIcon={<KeyboardBackspaceIcon />}
-              sx={{borderRadius:5}}
-              onClick={()=>navigate('/students')}
+              sx={{ borderRadius: 5 }}
+              onClick={() => navigate("/students")}
             >
               Back
             </Button>
           </Box>
           <SoftBox mt={2} mb={4}>
             <Grid container spacing={3}>
-              <Grid item xs={12} md={6} xl={4}>
+              <Grid item xs={12} md={6} xl={6}>
                 <Card sx={{ padding: 2 }}>
                   <Typography>Address Details</Typography>
                   <Box>
@@ -240,7 +244,7 @@ function ViewStudentDetails() {
                   </Box>
                 </Card>
               </Grid>
-              <Grid item xs={12} md={6} xl={4}>
+              <Grid item xs={12} md={6} xl={6}>
                 <Card sx={{ padding: 2 }}>
                   <Typography>Student Details</Typography>
                   <Box>

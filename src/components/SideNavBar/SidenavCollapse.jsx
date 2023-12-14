@@ -9,20 +9,23 @@ import ListItemText from "@mui/material/ListItemText";
 import Icon from "@mui/material/Icon";
 
 // Soft UI Dashboard React components
-import SoftBox from "components/SoftBox";
-
+/* import SoftBox from "components/SoftBox";
+ */
 // Custom styles for the SidenavCollapse
 import {
   collapseIcon,
   collapseIconBox,
   collapseItem,
   collapseText,
-} from "./styles/sidenavCollapse";
+} from "./styles/sidenavBarCollapse";
+import { useSoftUIController } from "../../context";
+
+import SoftBox from "../SoftBox";
 
 // Soft UI Dashboard React context
-import { useSoftUIController } from "context";
+/* import { useSoftUIController } from "context";
 import BoxComponent from "../BoxComponent/BoxComponent";
-import { useUIController } from "../../context";
+import { useUIController } from "../../context"; */
 
 function SidenavCollapse({
   color,
@@ -34,13 +37,13 @@ function SidenavCollapse({
   open,
   ...rest
 }) {
-  const [controller] = useUIController();
+  const [controller] = useSoftUIController();
   const { miniSidenav, transparentSidenav } = controller;
 
   return (
     <>
       <ListItem component="li">
-        <BoxComponent
+        <SoftBox
           {...rest}
           sx={(theme) => collapseItem(theme, { active, transparentSidenav })}
         >
@@ -64,7 +67,7 @@ function SidenavCollapse({
               collapseText(theme, { miniSidenav, transparentSidenav, active })
             }
           />
-        </BoxComponent>
+        </SoftBox>
       </ListItem>
       {children && (
         <Collapse in={open} unmountOnExit>
