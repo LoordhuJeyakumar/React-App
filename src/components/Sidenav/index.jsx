@@ -32,10 +32,13 @@ import sidenavLogoLabel from "examples/Sidenav/styles/sidenav";
 import SidenavCollapse from "./SidenavCollapse";
 
 import SidenavRoot from "./SidenavRoot";
-import { setMiniSidenav, useSoftUIController } from "../../context";
-import SoftBox from "../../components/SoftBox";
+import {
+  setMiniSidenav,
+  useSoftUIController,
+} from "../../context/UIControllerProvider";
+import SoftBox from "../SoftBox";
 import sidenavLogoLabel from "./styles/sidenav";
-import SoftTypography from "../../components/SoftTypography";
+import SoftTypography from "../SoftTypography";
 import { Box } from "@mui/material";
 
 function Sidenav({ color, brand, brandName, routes, ...rest }) {

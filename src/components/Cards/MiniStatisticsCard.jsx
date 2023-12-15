@@ -5,8 +5,8 @@ import PropTypes from "prop-types";
 import Card from "@mui/material/Card";
 import Grid from "@mui/material/Grid";
 import Icon from "@mui/material/Icon";
-import SoftBox from "../../components/SoftBox";
-import SoftTypography from "../../components/SoftTypography";
+import SoftBox from "../SoftBox";
+import SoftTypography from "../SoftTypography";
 
 // Soft UI Dashboard React components
 /* import SoftBox from "components/SoftBox";

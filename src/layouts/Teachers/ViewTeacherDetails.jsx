@@ -5,9 +5,9 @@ import Card from "@mui/material/Card";
 // @mui icons
 import SoftBox from "../../components/SoftBox";
 import SoftTypography from "../../components/SoftTypography";
-import Footer from "../../examples/Footer";
-import DashboardLayout from "../../examples/LayoutContainers/DashboardLayout";
-import DashboardNavbar from "../../examples/Navbars/DashboardNavbar";
+import Footer from "../../components/Footer";
+import DashboardLayout from "../../components/LayoutContainers/DashboardLayout";
+import DashboardNavbar from "../../components/Navbars/DashboardNavbar";
 import SoftAvatar from "../../components/SoftAvatar";
 import curved6 from "../../assets/images/curved-images/curved-6.jpg";
 import { useContext, useEffect, useState } from "react";
@@ -36,10 +36,10 @@ import ClassIcon from "@mui/icons-material/Class";
 import SoftBadge from "../../components/SoftBadge";
 import CloudIcon from "@mui/icons-material/Cloud";
 import { grey } from "@mui/material/colors";
-import SupervisedUserCircleIcon from '@mui/icons-material/SupervisedUserCircle';
+import SupervisedUserCircleIcon from "@mui/icons-material/SupervisedUserCircle";
 import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace";
 import React from "react";
-import CollectionsBookmarkIcon from '@mui/icons-material/CollectionsBookmark';
+import CollectionsBookmarkIcon from "@mui/icons-material/CollectionsBookmark";
 
 function ViewTeacherDetails() {
   const dataContext = useContext(DataContext);
@@ -244,32 +244,34 @@ function ViewTeacherDetails() {
                     <Typography>Teacher Details</Typography>
                     <Box>
                       <List>
-                      <ListItem>
-                        <ListItemAvatar>
-                          <Avatar sx={{ bgcolor: grey[900] }}>
-                            <CloudIcon color="success" />
-                          </Avatar>
-                        </ListItemAvatar>
-                        <ListItemText
-                          primary={
-                            <Typography variant="caption">
-                              Online Status
-                            </Typography>
-                          }
-                          secondary={
-                            <SoftBadge
-                              variant="gradient"
-                              badgeContent={
-                                teacher.isOnline ? "online" : "offline"
-                              }
-                              color={teacher.isOnline ? "success" : "secondary"}
-                              size="xs"
-                              container
-                            />
-                          }
-                        />
-                      </ListItem>
-                      <ListItem>
+                        <ListItem>
+                          <ListItemAvatar>
+                            <Avatar sx={{ bgcolor: grey[900] }}>
+                              <CloudIcon color="success" />
+                            </Avatar>
+                          </ListItemAvatar>
+                          <ListItemText
+                            primary={
+                              <Typography variant="caption">
+                                Online Status
+                              </Typography>
+                            }
+                            secondary={
+                              <SoftBadge
+                                variant="gradient"
+                                badgeContent={
+                                  teacher.isOnline ? "online" : "offline"
+                                }
+                                color={
+                                  teacher.isOnline ? "success" : "secondary"
+                                }
+                                size="xs"
+                                container
+                              />
+                            }
+                          />
+                        </ListItem>
+                        <ListItem>
                           <ListItemAvatar>
                             <Avatar sx={{ bgcolor: grey[900] }}>
                               <SupervisedUserCircleIcon color="success" />
@@ -384,7 +386,7 @@ function ViewTeacherDetails() {
                             }
                           />
                         </ListItem>
-                        
+
                         <ListItem>
                           <ListItemAvatar>
                             <Avatar sx={{ bgcolor: grey[900] }}>
@@ -394,20 +396,22 @@ function ViewTeacherDetails() {
                           <ListItemText
                             primary={
                               <Typography variant="caption">
-                               Assigned Class
+                                Assigned Class
                               </Typography>
                             }
                             secondary={
                               <Typography>
-                                {teacher.assignedClass ? `${teacher.assignedClass}${
-                                  teacher.assignedClass == 1
-                                    ? "st"
-                                    : teacher.assignedClass == 2
-                                    ? "nd"
-                                    : teacher.assignedClass == 3
-                                    ? "rd"
-                                    : "th"
-                                } Standerd Teacher` : "Class Not Assigned Yet"}
+                                {teacher.assignedClass
+                                  ? `${teacher.assignedClass}${
+                                      teacher.assignedClass == 1
+                                        ? "st"
+                                        : teacher.assignedClass == 2
+                                        ? "nd"
+                                        : teacher.assignedClass == 3
+                                        ? "rd"
+                                        : "th"
+                                    } Standerd Teacher`
+                                  : "Class Not Assigned Yet"}
                               </Typography>
                             }
                           />

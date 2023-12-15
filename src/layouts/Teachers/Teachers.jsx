@@ -1,8 +1,8 @@
 /* import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar"; */
 import React, { useContext } from "react";
-import DashboardLayout from "../../examples/LayoutContainers/DashboardLayout";
-import DashboardNavbar from "../../examples/Navbars/DashboardNavbar";
+import DashboardLayout from "../../components/LayoutContainers/DashboardLayout";
+import DashboardNavbar from "../../components/Navbars/DashboardNavbar";
 /* import TeachersTable from "./TeachersTable"; */
 
 import teacher1 from "../../../src/assets/images/teacher1.png";

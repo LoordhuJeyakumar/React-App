@@ -2,14 +2,14 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App.jsx";
 import { BrowserRouter } from "react-router-dom";
-import { SoftUIControllerProvider } from "./context/index.jsx";
+import { UIControllerProvider } from "./context/UIControllerProvider.jsx";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <BrowserRouter>
-      <SoftUIControllerProvider>
+      <UIControllerProvider>
         <App />
-      </SoftUIControllerProvider>
+      </UIControllerProvider>
     </BrowserRouter>
   </React.StrictMode>
 );

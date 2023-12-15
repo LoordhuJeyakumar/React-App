@@ -1,67 +1,21 @@
 import { useState, useEffect } from "react";
-
-// react-router components
-import { useLocation, Link } from "react-router-dom";
-
-// prop-types is a library for typechecking of props.
-
-// @material-ui core components
-/* import AppBar from "@mui/material/AppBar";
-import Toolbar from "@mui/material/Toolbar";
-import IconButton from "@mui/material/IconButton"; */
-/* import Menu from "@mui/material/Menu"; */
-/* import Icon from "@mui/material/Icon"; */
-
-// Soft UI Dashboard React components
-/* import SoftBox from "components/SoftBox";
-import SoftTypography from "components/SoftTypography"; */
-/* import SoftInput from "components/SoftInput"; */
-
-// Soft UI Dashboard React examples
-/* import Breadcrumbs from "examples/Breadcrumbs";
-import NotificationItem from "examples/Items/NotificationItem"; */
-
-// Custom styles for DashboardNavbar
-/* import {
-  navbar,
-  navbarContainer,
-  navbarRow,
-  navbarIconButton,
-  navbarMobileMenu,
-} from "examples/Navbars/DashboardNavbar/styles"; */
-
-// Soft UI Dashboard React context
-/* import {
-  useSoftUIController,
-  setTransparentNavbar,
-  setMiniSidenav,
-  setOpenConfigurator,
-} from "context"; */
-
-// Images
-/* import team2 from "/src/assets/images/team-2.jpg";
-import logoSpotify from "../../../assets/images/logo-spotify.svg"; */
+import { useLocation } from "react-router-dom";
 import PropTypes from "prop-types";
-/* import SoftBox from "../../../components/SoftBox"; */
-import SoftTypography from "../../../components/SoftTypography";
+import SoftTypography from "../../SoftTypography";
 import { navbar, navbarContainer, navbarMobileMenu, navbarRow } from "./styles";
-import NotificationItem from "../../Items/NotificationItem";
 import Breadcrumbs from "../../Breadcrumbs";
 import {
   setMiniSidenav,
-  setOpenConfigurator,
   setTransparentNavbar,
   useSoftUIController,
-} from "../../../context";
+} from "../../../context/UIControllerProvider";
 import { AppBar, Icon, IconButton, Menu, Toolbar } from "@mui/material";
-import SoftBox from "../../../components/SoftBox";
+import SoftBox from "../../SoftBox";
 
 function DashboardNavbar({ absolute, light, isMini }) {
   const [navbarType, setNavbarType] = useState();
   const [controller, dispatch] = useSoftUIController();
-  const { miniSidenav, transparentNavbar, fixedNavbar, openConfigurator } =
-    controller;
-  const [openMenu, setOpenMenu] = useState(false);
+  const { miniSidenav, transparentNavbar, fixedNavbar } = controller;
   const route = useLocation().pathname.split("/").slice(1);
 
   useEffect(() => {
@@ -94,52 +48,6 @@ function DashboardNavbar({ absolute, light, isMini }) {
   }, [dispatch, fixedNavbar]);
 
   const handleMiniSidenav = () => setMiniSidenav(dispatch, !miniSidenav);
-  const handleConfiguratorOpen = () =>
-    setOpenConfigurator(dispatch, !openConfigurator);
-  const handleOpenMenu = (event) => setOpenMenu(event.currentTarget);
-  const handleCloseMenu = () => setOpenMenu(false);
-
-  // Render the notifications menu
-  const renderMenu = () => (
-    <Menu
-      anchorEl={openMenu}
-      anchorReference={null}
-      anchorOrigin={{
-        vertical: "bottom",
-        horizontal: "left",
-      }}
-      open={Boolean(openMenu)}
-      onClose={handleCloseMenu}
-      sx={{ mt: 2 }}
-    >
-      <NotificationItem
-        image={<img src={team2} alt="person" />}
-        title={["New message", "from Laur"]}
-        date="13 minutes ago"
-        onClick={handleCloseMenu}
-      />
-      <NotificationItem
-        image={<img src={logoSpotify} alt="person" />}
-        title={["New album", "by Travis Scott"]}
-        date="1 day"
-        onClick={handleCloseMenu}
-      />
-      <NotificationItem
-        color="secondary"
-        image={
-          <Icon
-            fontSize="small"
-            sx={{ color: ({ palette: { white } }) => white.main }}
-          >
-            payment
-          </Icon>
-        }
-        title={["", "Payment successfully completed"]}
-        date="2 days"
-        onClick={handleCloseMenu}
-      />
-    </Menu>
-  );
 
   return (
     <AppBar

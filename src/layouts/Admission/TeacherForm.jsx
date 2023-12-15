@@ -50,8 +50,8 @@ import {
 } from "../../reducers/TeacherFormReducer";
 import axios from "axios";
 import EditNoteIcon from "@mui/icons-material/EditNote";
-import DashboardLayout from "../../examples/LayoutContainers/DashboardLayout";
-import DashboardNavbar from "../../examples/Navbars/DashboardNavbar";
+import DashboardLayout from "../../components/LayoutContainers/DashboardLayout";
+import DashboardNavbar from "../../components/Navbars/DashboardNavbar";
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -333,7 +333,7 @@ function TeacherForm({ mode }) {
           sx={{ width: "100%" }}
           variant="filled"
         >
-          Teacher Succesfully {mode !== "edit"  ? "Added!" : "Update!"}
+          Teacher Succesfully {mode !== "edit" ? "Added!" : "Update!"}
         </Alert>
       </Snackbar>
       <Snackbar
@@ -366,14 +366,14 @@ function TeacherForm({ mode }) {
             textGradient
             align="center"
           >
-            {mode === 'edit' ? "Update Teacher" : "New Teacher"}
+            {mode === "edit" ? "Update Teacher" : "New Teacher"}
           </SoftTypography>
         </Box>
 
         <Box
           component="form"
           autoComplete="on"
-          onSubmit={mode  === 'edit' ? handleTeacherUpdate :  handleTeacherAdd}
+          onSubmit={mode === "edit" ? handleTeacherUpdate : handleTeacherAdd}
           ref={formRef}
         >
           <Grid
@@ -773,7 +773,7 @@ function TeacherForm({ mode }) {
                 justifyContent={"center"}
                 display={"flex"}
               >
-                {mode !== 'edit' ? (
+                {mode !== "edit" ? (
                   <Box sx={{ m: 1, position: "relative" }}>
                     <Button
                       variant="contained"

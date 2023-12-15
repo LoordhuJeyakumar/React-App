@@ -8,7 +8,7 @@ import CssBaseline from "@mui/material/CssBaseline";
 /* import Sidenav from "./examples/Sidenav"; */
 
 // Soft UI Dashboard React themes
-import theme from "./assets/theme";
+import theme from "./assets/theme/createTheme";
 import routes from "./routes";
 import { createContext, useState } from "react";
 import axios from "axios";
@@ -18,7 +18,7 @@ import DeleteStudent from "./layouts/Students/DeleteStudent";
 import ViewTeacherDetails from "./layouts/Teachers/ViewTeacherDetails";
 import DeleteTeacher from "./layouts/Teachers/DeleteTeacher";
 import EditTeacherDetails from "./layouts/Teachers/EditTeacherDetails";
-import Sidenav from "./examples/Sidenav";
+import Sidenav from "./components/Sidenav";
 /* import Sidenav from "./components/SideNavBar"; */
 const localHost = true;
 const apiURL = localHost

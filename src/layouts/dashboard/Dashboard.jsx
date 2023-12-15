@@ -1,14 +1,14 @@
 import { Card, Grid, Icon, Typography } from "@mui/material";
 import curved0 from "../../assets/images/curved-images/curved0.jpg";
 import SoftBox from "../../components/SoftBox";
-import DashboardLayout from "../../examples/LayoutContainers/DashboardLayout";
-import DashboardNavbar from "../../examples/Navbars/DashboardNavbar";
+import DashboardLayout from "../../components/LayoutContainers/DashboardLayout";
+import DashboardNavbar from "../../components/Navbars/DashboardNavbar";
 import SoftTypography from "../../components/SoftTypography";
 /* import MiniStatisticsCard from "../../examples/Cards/MiniStatisticsCard"; */
-import Footer from "../../examples/Footer";
+import Footer from "../../components/Footer";
 import { useContext } from "react";
 import { DataContext } from "../../App";
-import MiniStatisticsCard from "../../examples/Cards/MiniStatisticsCard";
+import MiniStatisticsCard from "../../components/Cards/MiniStatisticsCard";
 function Dashboard() {
   const { studentData, teacherData } = useContext(DataContext);
   let totalStudents = studentData.length;

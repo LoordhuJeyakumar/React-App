@@ -5,8 +5,8 @@ import React, {
   useRef,
   useState,
 } from "react";
-import DashboardLayout from "../../examples/LayoutContainers/DashboardLayout";
-import DashboardNavbar from "../../examples/Navbars/DashboardNavbar";
+import DashboardLayout from "../../components/LayoutContainers/DashboardLayout";
+import DashboardNavbar from "../../components/Navbars/DashboardNavbar";
 import PersonAddAlt1Icon from "@mui/icons-material/PersonAddAlt1";
 import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace";
 import {
@@ -96,7 +96,7 @@ function StudentForm({ mode }) {
               return eachData;
             }
           });
-         
+
           dispatch({
             type: "update",
             payLoad: userData,
@@ -271,7 +271,7 @@ function StudentForm({ mode }) {
       <SoftBox>
         <Box align="center" mb={2}>
           <SoftTypography variant="h3" color="info" textGradient align="center">
-           {mode == "edit" ? "Update Student" : "New Student"}
+            {mode == "edit" ? "Update Student" : "New Student"}
           </SoftTypography>
         </Box>
 

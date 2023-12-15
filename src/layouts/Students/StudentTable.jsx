@@ -1,12 +1,12 @@
 import React, { useContext } from "react";
 
-import student_1 from "../../../src/assets/images/student_1.png";
-import student_2 from "../../../src/assets/images/student_2.png";
-import student_3 from "../../../src/assets/images/student_3.png";
-import student_4 from "../../../src/assets/images/student_4.png";
-import student_5 from "../../../src/assets/images/student_5.png";
-import student_6 from "../../../src/assets/images/student_6.png";
-import student_7 from "../../../src/assets/images/student_7.png";
+import student_1 from "../../assets/images/student_1.png";
+import student_2 from "../../assets/images/student_2.png";
+import student_3 from "../../assets/images/student_3.png";
+import student_4 from "../../assets/images/student_4.png";
+import student_5 from "../../assets/images/student_5.png";
+import student_6 from "../../assets/images/student_6.png";
+import student_7 from "../../assets/images/student_7.png";
 
 import { DataContext } from "../../App";
 import TableComponent from "../../components/TableComponent";

@@ -7,9 +7,9 @@ import Card from "@mui/material/Card";
 // @mui icons
 import SoftBox from "../../components/SoftBox";
 import SoftTypography from "../../components/SoftTypography";
-import Footer from "../../examples/Footer";
-import DashboardLayout from "../../examples/LayoutContainers/DashboardLayout";
-import DashboardNavbar from "../../examples/Navbars/DashboardNavbar";
+import Footer from "../../components/Footer";
+import DashboardLayout from "../../components/LayoutContainers/DashboardLayout";
+import DashboardNavbar from "../../components/Navbars/DashboardNavbar";
 import SoftAvatar from "../../components/SoftAvatar";
 import curved0 from "../../assets/images/curved-images/curved0.jpg";
 import { useContext, useEffect, useState } from "react";

@@ -5,7 +5,7 @@ import Icon from "@mui/material/Icon";
 import GitHubIcon from "@mui/icons-material/GitHub";
 import { Box } from "@mui/material";
 /* import pxToRem from "../../assets/theme/functions/pxToRem"; */
-import SoftTypography from "../components/SoftTypography";
+import SoftTypography from "./SoftTypography";
 import pxToRem from "../assets/theme/functions/pxToRem";
 
 function Footer() {

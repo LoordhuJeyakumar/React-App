@@ -36,14 +36,14 @@ import Icon from "@mui/material/Icon";
 
 // Soft UI Dashboard React context
 /* import { useSoftUIController } from "context"; */
-import SoftBox from "../../components/SoftBox";
+import SoftBox from "../SoftBox";
 import {
   collapseIcon,
   collapseIconBox,
   collapseItem,
   collapseText,
 } from "./styles/sidenavCollapse";
-import { useSoftUIController } from "../../context";
+import { useSoftUIController } from "../../context/UIControllerProvider";
 
 function SidenavCollapse({
   color,

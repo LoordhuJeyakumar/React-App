@@ -1,5 +1,3 @@
-
-
 // react-router-dom components
 import { Link } from "react-router-dom";
 
@@ -8,8 +6,8 @@ import PropTypes from "prop-types";
 
 // @mui material components
 import { Breadcrumbs as MuiBreadcrumbs, Icon } from "@mui/material";
-import SoftBox from "../components/SoftBox";
-import SoftTypography from "../components/SoftTypography";
+import SoftBox from "./SoftBox";
+import SoftTypography from "./SoftTypography";
 /* import Icon from "@mui/material/Icon"; */
 /* import SoftBox from "../../components/SoftBox";
 import SoftTypography from "../../components/SoftTypography"; */
@@ -26,7 +24,8 @@ function Breadcrumbs({ icon, title, route, light }) {
       <MuiBreadcrumbs
         sx={{
           "& .MuiBreadcrumbs-separator": {
-            color: ({ palette: { white, grey } }) => (light ? white.main : grey[600]),
+            color: ({ palette: { white, grey } }) =>
+              light ? white.main : grey[600],
           },
         }}
       >
