@@ -16,7 +16,6 @@ import {
   CircularProgress,
   FormControl,
   Grid,
-  IconButton,
   InputLabel,
   MenuItem,
   Select,
@@ -36,13 +35,12 @@ import {
   initialState,
   studentReducerFn,
 } from "../../reducers/StudentFormReducer";
-import { addDays, parseISO } from "date-fns";
 
 import axios from "axios";
 import { DataContext } from "../../App";
 import { green, purple } from "@mui/material/colors";
 import EditNoteIcon from "@mui/icons-material/EditNote";
-import { Navigate, useNavigate, useParams } from "react-router-dom";
+import {  useNavigate, useParams } from "react-router-dom";
 import { getStudentRandomImages } from "../Students/StudentTable";
 
 function StudentForm({ mode }) {
