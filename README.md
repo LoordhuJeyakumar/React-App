@@ -74,4 +74,4 @@ Ta
 
   ### Backend Deployed URL [Click Here](https://studentteacherapi.onrender.com/)
 
-  ### Netlify Deployed URL [Click Here](https://sb-admin-dashboard-task.netlify.app/)
+  ### Netlify Deployed URL [Click Here](https://student-teacher-management-react-crud.netlify.app/)

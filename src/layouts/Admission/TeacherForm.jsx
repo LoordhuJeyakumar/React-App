@@ -800,7 +800,7 @@ function TeacherForm({ mode }) {
                     )}
                   </Box>
                 ) : (
-                  <Box sx={{ m: 1, position: "relative" }}>
+                  <Box sx={{ m: -5, position: "relative" }}>
                     <Button
                       variant="contained"
                       sx={updateButtonSx}

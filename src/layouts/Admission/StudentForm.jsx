@@ -244,7 +244,7 @@ function StudentForm({ mode }) {
           sx={{ width: "100%" }}
           variant="filled"
         >
-          Student Succesfully Added!
+          Student Succesfully {mode !== "edit" ? "Added!" : "Update!"}
         </Alert>
       </Snackbar>
       <Snackbar
@@ -261,7 +261,7 @@ function StudentForm({ mode }) {
           sx={{ width: "100%", display: "flex", alignItems: "center" }}
           variant="filled"
         >
-          Student Can't be Added!
+          Student Can't be {mode !== "edit" ? "Added!" : "Update!"}
           <br />{" "}
           <Typography variant="caption" color="info" m={0} p={0}>
             Server Error
@@ -505,7 +505,7 @@ function StudentForm({ mode }) {
                 </DemoContainer>
               </LocalizationProvider>
             </Grid>
-            <Grid item md={10} lg={10}>
+            <Grid item md={10} lg={10} sx={{padding:"0"}}>
               <Box
                 component={"div"}
                 width={"100%"}
@@ -539,7 +539,7 @@ function StudentForm({ mode }) {
                     )}
                   </Box>
                 ) : (
-                  <Box sx={{ m: 1, position: "relative" }}>
+                  <Box sx={{ m: -5, position: "relative" }}>
                     <Button
                       variant="contained"
                       sx={updateButtonSx}
