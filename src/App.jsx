@@ -5,9 +5,6 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import { ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 
-/* import Sidenav from "./examples/Sidenav"; */
-
-// Soft UI Dashboard React themes
 import theme from "./assets/theme/createTheme";
 import routes from "./routes";
 import { createContext, useState } from "react";
@@ -19,7 +16,6 @@ import ViewTeacherDetails from "./layouts/Teachers/ViewTeacherDetails";
 import DeleteTeacher from "./layouts/Teachers/DeleteTeacher";
 import EditTeacherDetails from "./layouts/Teachers/EditTeacherDetails";
 import Sidenav from "./components/Sidenav";
-/* import Sidenav from "./components/SideNavBar"; */
 const localHost = true;
 const apiURL = localHost
   ? `http://localhost:3000/`

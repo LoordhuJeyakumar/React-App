@@ -1,10 +1,8 @@
 // @mui material components
 import Link from "@mui/material/Link";
 import Icon from "@mui/material/Icon";
-/* import SoftTypography from "../../components/SoftTypography"; */
 import GitHubIcon from "@mui/icons-material/GitHub";
 import { Box } from "@mui/material";
-/* import pxToRem from "../../assets/theme/functions/pxToRem"; */
 import SoftTypography from "./SoftTypography";
 import pxToRem from "../assets/theme/functions/pxToRem";
 

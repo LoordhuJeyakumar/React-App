@@ -11,33 +11,13 @@ import List from "@mui/material/List";
 import Divider from "@mui/material/Divider";
 import Link from "@mui/material/Link";
 import Icon from "@mui/material/Icon";
-
-// Soft UI Dashboard React components
-/* 
-import SoftTypography from "components/SoftTypography";
-import SoftButton from "components/SoftButton";
-
-// Soft UI Dashboard React examples
-import SidenavCollapse from "examples/Sidenav/SidenavCollapse";
-import SidenavCard from "examples/Sidenav/SidenavCard";
-
-// Custom styles for the Sidenav
-import SidenavRoot from "examples/Sidenav/SidenavRoot";
-import sidenavLogoLabel from "examples/Sidenav/styles/sidenav";
-
-// Soft UI Dashboard React context */
-/* import { useSoftUIController, setMiniSidenav } from "context"; */
-// import SoftBox from "components/SoftBox";
-// import SoftTypography from "components/SoftTypography";
 import SidenavCollapse from "./SidenavCollapse";
-
 import SidenavRoot from "./SidenavRoot";
 import {
   setMiniSidenav,
   useSoftUIController,
 } from "../../context/UIControllerProvider";
 import SoftBox from "../SoftBox";
-import sidenavLogoLabel from "./styles/sidenav";
 import SoftTypography from "../SoftTypography";
 import { Box } from "@mui/material";
 

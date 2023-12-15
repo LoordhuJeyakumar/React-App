@@ -8,13 +8,6 @@ import PropTypes from "prop-types";
 import { Breadcrumbs as MuiBreadcrumbs, Icon } from "@mui/material";
 import SoftBox from "./SoftBox";
 import SoftTypography from "./SoftTypography";
-/* import Icon from "@mui/material/Icon"; */
-/* import SoftBox from "../../components/SoftBox";
-import SoftTypography from "../../components/SoftTypography"; */
-
-// Soft UI Dashboard React components
-/* import SoftBox from "components/SoftBox";
-import SoftTypography from "components/SoftTypography"; */
 
 function Breadcrumbs({ icon, title, route, light }) {
   const routes = route.slice(0, -1);

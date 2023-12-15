@@ -1,18 +1,3 @@
-/**
-=========================================================
-* Soft UI Dashboard React - v4.0.1
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/soft-ui-dashboard-react
-* Copyright 2023 Creative Tim (https://www.creative-tim.com)
-
-Coded by www.creative-tim.com
-
- =========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-*/
-
 import { forwardRef } from "react";
 
 // prop-types is a library for typechecking of props
@@ -21,12 +6,33 @@ import SoftBadgeRoot from "./SoftBadgeRoot";
 
 // Custom styles for the SoftBadge
 
-
 const SoftBadge = forwardRef(
-  ({ color, variant, size, circular, indicator, border, container, children, ...rest }, ref) => (
+  (
+    {
+      color,
+      variant,
+      size,
+      circular,
+      indicator,
+      border,
+      container,
+      children,
+      ...rest
+    },
+    ref
+  ) => (
     <SoftBadgeRoot
       {...rest}
-      ownerState={{ color, variant, size, circular, indicator, border, container, children }}
+      ownerState={{
+        color,
+        variant,
+        size,
+        circular,
+        indicator,
+        border,
+        container,
+        children,
+      }}
       ref={ref}
       color="default"
     >
