@@ -13,26 +13,30 @@ import Link from "@mui/material/Link";
 import Icon from "@mui/material/Icon";
 
 // Soft UI Dashboard React components
-/* import SoftBox from "components/SoftBox"; */
-/* import SoftTypography from "components/SoftTypography"; */
-/* import SoftButton from "components/SoftButton"; */
-import BoxComponent from "../BoxComponent/BoxComponent";
+/* 
+import SoftTypography from "components/SoftTypography";
+import SoftButton from "components/SoftButton";
 
 // Soft UI Dashboard React examples
-/* import SidenavCollapse from "examples/Sidenav/SidenavCollapse"; */
-/* import SidenavCard from "examples/Sidenav/SidenavCard"; */
+import SidenavCollapse from "examples/Sidenav/SidenavCollapse";
+import SidenavCard from "examples/Sidenav/SidenavCard";
 
 // Custom styles for the Sidenav
-/* import SidenavRoot from "examples/Sidenav/SidenavRoot";
-import sidenavLogoLabel from "examples/Sidenav/styles/sidenav"; */
+import SidenavRoot from "examples/Sidenav/SidenavRoot";
+import sidenavLogoLabel from "examples/Sidenav/styles/sidenav";
 
-// Soft UI Dashboard React context
+// Soft UI Dashboard React context */
 /* import { useSoftUIController, setMiniSidenav } from "context"; */
-import SoftTypography from "../SoftTypography";
+// import SoftBox from "components/SoftBox";
+// import SoftTypography from "components/SoftTypography";
 import SidenavCollapse from "./SidenavCollapse";
-import SidenavRoot from "../../examples/Sidenav/SidenavRoot";
-import sidenavLogoLabel from "../../examples/Sidenav/styles/sidenav";
+
+import SidenavRoot from "./SidenavRoot";
 import { setMiniSidenav, useSoftUIController } from "../../context";
+import SoftBox from "../../components/SoftBox";
+import sidenavLogoLabel from "./styles/sidenav";
+import SoftTypography from "../../components/SoftTypography";
+import { Box } from "@mui/material";
 
 function Sidenav({ color, brand, brandName, routes, ...rest }) {
   const [controller, dispatch] = useSoftUIController();
@@ -126,8 +130,8 @@ function Sidenav({ color, brand, brandName, routes, ...rest }) {
       variant="permanent"
       ownerState={{ transparentSidenav, miniSidenav }}
     >
-      <BoxComponent pt={3} pb={1} px={4} textAlign="center">
-        <BoxComponent
+      <SoftBox pt={3} pb={1} px={4} textAlign="center">
+        <SoftBox
           display={{ xs: "block", xl: "none" }}
           position="absolute"
           top={0}
@@ -139,31 +143,28 @@ function Sidenav({ color, brand, brandName, routes, ...rest }) {
           <SoftTypography variant="h6" color="secondary">
             <Icon sx={{ fontWeight: "bold" }}>close</Icon>
           </SoftTypography>
-        </BoxComponent>
-        <BoxComponent
+        </SoftBox>
+        <Box
           component={NavLink}
           to="/"
           display="flex"
+          flexDirection={"column"}
           alignItems="center"
         >
-          {brand && (
-            <BoxComponent
-              component="img"
-              src={brand}
-              alt="Soft UI Logo"
-              width="2rem"
-            />
-          )}
-          <BoxComponent
-            width={!brandName && "100%"}
-            sx={(theme) => sidenavLogoLabel(theme, { miniSidenav })}
-          >
-            <SoftTypography component="h6" variant="button" fontWeight="medium">
-              {brandName}
-            </SoftTypography>
-          </BoxComponent>
-        </BoxComponent>
-      </BoxComponent>
+          <Box>
+            <lord-icon
+              src="https://cdn.lordicon.com/hungkruo.json"
+              trigger="loop"
+              state="loop-cycle"
+              style={{ width: "100px", height: "100px" }}
+            ></lord-icon>
+          </Box>
+
+          <SoftTypography component="h6" variant="button" fontWeight="medium">
+            {brandName}
+          </SoftTypography>
+        </Box>
+      </SoftBox>
       <Divider />
       <List>{renderRoutes}</List>
     </SidenavRoot>

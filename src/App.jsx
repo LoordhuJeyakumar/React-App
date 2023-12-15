@@ -18,7 +18,8 @@ import DeleteStudent from "./layouts/Students/DeleteStudent";
 import ViewTeacherDetails from "./layouts/Teachers/ViewTeacherDetails";
 import DeleteTeacher from "./layouts/Teachers/DeleteTeacher";
 import EditTeacherDetails from "./layouts/Teachers/EditTeacherDetails";
-import Sidenav from "./components/SideNavBar";
+import Sidenav from "./examples/Sidenav";
+/* import Sidenav from "./components/SideNavBar"; */
 const localHost = true;
 const apiURL = localHost
   ? `http://localhost:3000/`
@@ -93,7 +94,6 @@ function App() {
             brandName="Student & Teacher Management"
             routes={routes}
           />
-          
         </>
         <DataContext.Provider
           value={{
@@ -113,9 +113,9 @@ function App() {
               path="editStudent/:userId"
               element={<EditStudentDetails />}
             />
-             <Route
+            <Route
               path="editTeacher/:userId"
-              element={<EditTeacherDetails/>}
+              element={<EditTeacherDetails />}
             />
             <Route path="students/:userId" element={<ViewStudentDetails />} />
             <Route path="teachers/:userId" element={<ViewTeacherDetails />} />

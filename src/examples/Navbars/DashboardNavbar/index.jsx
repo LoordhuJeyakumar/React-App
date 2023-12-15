@@ -1,150 +1,3 @@
-
-/**
-=========================================================
-* Soft UI Dashboard React - v4.0.1
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/soft-ui-dashboard-react
-* Copyright 2023 Creative Tim (https://www.creative-tim.com)
-
-Coded by www.creative-tim.com
-
- =========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-*/
-function navbar(theme, ownerState) {
-  const { palette, boxShadows, functions, transitions, breakpoints, borders } =
-    theme;
-  const { transparentNavbar, absolute, light } = ownerState;
-
-  const { dark, white, text, transparent } = palette;
-  const { navbarBoxShadow } = boxShadows;
-  const { rgba, pxToRem } = functions;
-  const { borderRadius } = borders;
-
-  return {
-    boxShadow: transparentNavbar || absolute ? "none" : navbarBoxShadow,
-    backdropFilter:
-      transparentNavbar || absolute
-        ? "none"
-        : `saturate(200%) blur(${pxToRem(30)})`,
-    backgroundColor:
-      transparentNavbar || absolute
-        ? `${transparent.main} !important`
-        : rgba(white.main, 0.8),
-
-    color: () => {
-      let color;
-
-      if (light) {
-        color = white.main;
-      } else if (transparentNavbar) {
-        color = text.main;
-      } else {
-        color = dark.main;
-      }
-
-      return color;
-    },
-    top: absolute ? 0 : pxToRem(12),
-    minHeight: pxToRem(75),
-    display: "grid",
-    alignItems: "center",
-    borderRadius: borderRadius.xl,
-    paddingTop: pxToRem(8),
-    paddingBottom: pxToRem(8),
-    paddingRight: absolute ? pxToRem(8) : 0,
-    paddingLeft: absolute ? pxToRem(16) : 0,
-
-    "& > *": {
-      transition: transitions.create("all", {
-        easing: transitions.easing.easeInOut,
-        duration: transitions.duration.standard,
-      }),
-    },
-
-    "& .MuiToolbar-root": {
-      display: "flex",
-      justifyContent: "space-between",
-      alignItems: "center",
-
-      [breakpoints.up("sm")]: {
-        minHeight: "auto",
-        padding: `${pxToRem(4)} ${pxToRem(16)}`,
-      },
-    },
-  };
-}
-
-const navbarContainer = ({ breakpoints }) => ({
-  flexDirection: "column",
-  alignItems: "flex-start",
-  justifyContent: "space-between",
-  pt: 0.5,
-  pb: 0.5,
-
-  [breakpoints.up("md")]: {
-    flexDirection: "row",
-    alignItems: "center",
-    paddingTop: "0",
-    paddingBottom: "0",
-  },
-});
-
-const navbarRow = ({ breakpoints }, { isMini }) => ({
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "space-between",
-  width: "100%",
-
-  [breakpoints.up("md")]: {
-    justifyContent: isMini ? "space-between" : "stretch",
-    width: isMini ? "100%" : "max-content",
-  },
-
-  [breakpoints.up("xl")]: {
-    justifyContent: "stretch !important",
-    width: "max-content !important",
-  },
-});
-
-const navbarIconButton = ({ typography: { size }, breakpoints }) => ({
-  px: 0.75,
-
-  "& .material-icons, .material-icons-round": {
-    fontSize: `${size.md} !important`,
-  },
-
-  "& .MuiTypography-root": {
-    display: "none",
-
-    [breakpoints.up("sm")]: {
-      display: "inline-block",
-      lineHeight: 1.2,
-      ml: 0.5,
-    },
-  },
-});
-
-const navbarMobileMenu = ({ breakpoints }) => ({
-  display: "inline-block",
-  lineHeight: 0,
-
-  [breakpoints.up("xl")]: {
-    display: "none",
-  },
-});
-
-export {
-  navbar,
-  navbarContainer,
-  navbarRow,
-  navbarIconButton,
-  navbarMobileMenu,
-};
-
-
 import { useState, useEffect } from "react";
 
 // react-router components
@@ -189,22 +42,19 @@ import NotificationItem from "examples/Items/NotificationItem"; */
 /* import team2 from "/src/assets/images/team-2.jpg";
 import logoSpotify from "../../../assets/images/logo-spotify.svg"; */
 import PropTypes from "prop-types";
-/* import SoftBox from "../../../components/SoftBox";
-import SoftTypography from "../../../components/SoftTypography"; */
-
-/* import NotificationItem from "../../Items/NotificationItem";
-import Breadcrumbs from "../../Breadcrumbs"; */
-/* import {
+/* import SoftBox from "../../../components/SoftBox"; */
+import SoftTypography from "../../../components/SoftTypography";
+import { navbar, navbarContainer, navbarMobileMenu, navbarRow } from "./styles";
+import NotificationItem from "../../Items/NotificationItem";
+import Breadcrumbs from "../../Breadcrumbs";
+import {
   setMiniSidenav,
   setOpenConfigurator,
   setTransparentNavbar,
   useSoftUIController,
-} from "../../../context"; */
+} from "../../../context";
 import { AppBar, Icon, IconButton, Menu, Toolbar } from "@mui/material";
-import SoftBox from "../../components/SoftBox";
-import SoftTypography from "../../components/SoftTypography";
-import { setMiniSidenav, setTransparentNavbar, useSoftUIController } from "../../context";
-import Breadcrumbs from "../Breadcrumbs";
+import SoftBox from "../../../components/SoftBox";
 
 function DashboardNavbar({ absolute, light, isMini }) {
   const [navbarType, setNavbarType] = useState();
@@ -249,7 +99,7 @@ function DashboardNavbar({ absolute, light, isMini }) {
   const handleOpenMenu = (event) => setOpenMenu(event.currentTarget);
   const handleCloseMenu = () => setOpenMenu(false);
 
-  /* // Render the notifications menu
+  // Render the notifications menu
   const renderMenu = () => (
     <Menu
       anchorEl={openMenu}
@@ -289,7 +139,7 @@ function DashboardNavbar({ absolute, light, isMini }) {
         onClick={handleCloseMenu}
       />
     </Menu>
-  ); */
+  );
 
   return (
     <AppBar
@@ -297,7 +147,6 @@ function DashboardNavbar({ absolute, light, isMini }) {
       color="inherit"
       sx={(theme) => navbar(theme, { transparentNavbar, absolute, light })}
     >
-      
       <Toolbar sx={(theme) => navbarContainer(theme)}>
         <SoftBox
           color="inherit"
@@ -350,4 +199,3 @@ DashboardNavbar.propTypes = {
 };
 
 export default DashboardNavbar;
-
