@@ -16,7 +16,7 @@ import ViewTeacherDetails from "./layouts/Teachers/ViewTeacherDetails";
 import DeleteTeacher from "./layouts/Teachers/DeleteTeacher";
 import EditTeacherDetails from "./layouts/Teachers/EditTeacherDetails";
 import Sidenav from "./components/Sidenav";
-const localHost = true;
+const localHost = false;
 const apiURL = localHost
   ? `http://localhost:3000/`
   : `https://studentteacherapi.onrender.com/`;
@@ -28,8 +28,6 @@ function App() {
   const [teacherData, setTeacherData] = useState([]);
   // Initializes the 'loadingData' state with a false value
   const [loadingData, setLoadingData] = useState(false);
-  // Initializes the 'isStudentAdded' state with a false value
-  const [isStudentAdded, setIsStudentAdded] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
 
   async function getStudentsData() {
@@ -104,6 +102,7 @@ function App() {
         >
           <Routes>
             {getRoutes(routes)}
+            {/* If any paths not found it will navigate to dashboard */}
             <Route path="*" element={<Navigate to="/dashboard" />} />
             <Route
               path="editStudent/:userId"
